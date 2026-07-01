@@ -13,8 +13,10 @@ updated: 2026-07-01
 - [[LLM Collaboration Rules]] — 5 rules for effective agent partnership (Karpathy 4 + 1)
 - [[Model Routing Strategy]] — Opus / Sonnet / Haiku by task
 
+## Cost & context
+- [[Context Budgeting]] — optimize token usage; match model tier to task
+
 ## Planned (not yet written)
 - Prompt Structure Patterns — XML tags, few-shot, role framing
-- Context Budgeting — keeping token use lean
 - Eval Harness Basics — measuring prompt changes
 - MCP & Tooling MOC — sub-map for tooling
