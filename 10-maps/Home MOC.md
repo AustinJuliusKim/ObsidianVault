@@ -11,6 +11,7 @@ updated: 2026-07-01
 
 ## Domains
 - [[LLM Engineering MOC]] — building with LLMs: workflow, prompting, evaluation, tooling.
+- [[Projects MOC]] — personal projects in the `personal/projects` monorepo.
 
 ## Planned domains
 - Personal Ops MOC — personal workflows & systems

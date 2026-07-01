@@ -16,6 +16,9 @@ updated: 2026-07-01
 ## Cost & context
 - [[Context Budgeting]] — optimize token usage; match model tier to task
 
+## Tooling & projects
+- [[Claude REPL]] — browser playground running Claude Code in E2B sandboxes (BYOK)
+
 ## Planned (not yet written)
 - Prompt Structure Patterns — XML tags, few-shot, role framing
 - Eval Harness Basics — measuring prompt changes
