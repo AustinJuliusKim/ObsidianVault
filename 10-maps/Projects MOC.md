@@ -4,14 +4,17 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-07-01
-updated: 2026-07-01
+updated: 2026-07-02
 ---
 # Projects MOC
 > Purpose: entry point for personal projects in the `personal/projects` monorepo.
 
 ## Active projects
 - [[Choices Webapp]] — serverless 2-player elimination game (React + AWS Lambda + DynamoDB + Web Push)
+  - [[Choices Growth Plan]] — growth + monetization strategy (target $5k/mo, food-focused, affiliate → premium → partnerships)
 - [[Claude REPL]] — browser playground running Claude Code in per-session E2B sandboxes (BYOK)
+  - [[Claude REPL Business Plan]] — guided free tier + metered wallet model (v1.1, locked)
+  - [[Claude REPL Lesson Plan]] — 8-lesson guided spine + advanced paid track (v1.0, locked)
 
 ## Claude REPL components
 - [[Claude REPL Frontend]] — React/Vite split-pane UI

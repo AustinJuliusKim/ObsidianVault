@@ -5,8 +5,8 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-01
-related: [[Projects MOC]]
+updated: 2026-07-02
+related: [[Projects MOC]], [[Choices Growth Plan]]
 ---
 # Choices Webapp
 Lightweight two-player, turn-based elimination game. Player A creates a game, pre-seeds 4 choices, and shares a human-friendly code (e.g. `PLUM-42`); Player B joins and they alternate eliminating choices (B → A → B) until one winner remains. No accounts — flows through messaging apps.
@@ -39,8 +39,19 @@ Fully serverless, shareable social game on AWS free tier. Turn alerts via Web Pu
 - Tests: `cd backend && npm test`.
 
 ## Status
-Complete & deployed at `choices.austinjuliuskim.com` (custom domain + ACM cert). Last substantive commit Jun 7, 2026.
+Deployed at `choices.austinjuliuskim.com` (custom domain + ACM cert); v1 complete (last substantive commit Jun 7, 2026). Now executing a growth + monetization push — see [[Choices Growth Plan]].
+
+## Growth Plan
+See **[[Choices Growth Plan]]** — the strategy, monetization, and sequencing doc. The earlier free-growth-experiment framing (no monetization, no accounts, no native apps) was superseded 2026-07-01: Choices is now a real side-business attempt — target $5k+/mo, food-focused ("what should we eat" category), accounts acceptable for premium, Capacitor iOS app on the ladder.
+
+### Carried-over engineering items (not covered in the growth plan)
+- Lightweight analytics: event counters for created / joined / completed / rematch (DynamoDB counters or Plausible/PostHog free tier).
+- GitHub Actions CI running the backend test suite; add integration tests for `handler.mjs` (currently only `game.mjs` is tested).
+- Fix doc drift: README and `docs/PLAN.md` still describe the old `/g/{id}` single-game model; code is pairing-based.
+- Variable choice count 3–8 (remove the `EXACTLY_FOUR` constraint in `game.mjs`) — prerequisite for group mode and bracket premium mode.
+- Pairing history + running tally/streak ("A 3 – 2 B") — requires keeping completed-game summaries past the 30-day TTL.
 
 ## Links
 - Part of: [[Projects MOC]]
+- Growth strategy: [[Choices Growth Plan]]
 - Repo: `personal/projects/apps/choices-webapp`
