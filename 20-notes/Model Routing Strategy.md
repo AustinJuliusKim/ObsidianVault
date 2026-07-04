@@ -12,6 +12,7 @@ related: [[LLM Collaboration Rules]]
 Match model tier to task to control cost and latency.
 
 ## Details
+- Fable -> When Opus is too expensive for a task that doesn't require its reasoning capabilities
 - Opus → architecture, planning, ambiguous problems
 - Sonnet → code changes, note writing, refactors
 - Haiku → search, capture, data gathering, classification

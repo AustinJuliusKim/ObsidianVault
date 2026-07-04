@@ -5,8 +5,8 @@ tags: [project, claude-code, e2b, websocket]
 type: project
 status: developing
 created: 2026-07-01
-updated: 2026-07-01
-related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]]
+updated: 2026-07-02
+related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Architecture]]
 ---
 # Claude REPL
 Browser-based playground that teaches Claude Code. A split pane shows a CLI-like terminal (left) and a live workspace with file tree + diffs (right). Prompts run Claude Code **headless inside an isolated E2B sandbox, one per session**. **BYOK** — the user supplies their own Anthropic API key.
@@ -40,13 +40,13 @@ The shared [[Claude REPL Protocol]] is the trust boundary (`parseClientMessage` 
 - **Backend is stateful** — needs a persistent container (not Lambda). E2B template pre-bakes Claude Code for faster cold starts.
 
 ## Deploy / env
-- Frontend: static host; `VITE_BACKEND_WS_URL`.
-- Backend: `npm start` on :8787; env `E2B_API_KEY`, `E2B_TEMPLATE`, `IDLE_TIMEOUT_MS`, `SESSION_TOKEN_CAP`, `LOG_LEVEL`.
-- E2B template built once: `cd sandbox-template && e2b template build` → set `E2B_TEMPLATE`.
+- **LIVE (2026-07-03): https://learn.austinjuliuskim.com** — static-only Guided mode; CloudFormation stack `GuidedRepl` (us-west-2): private S3 + CloudFront (OAC, SPA fallback), ACM cert us-east-1, Route53 alias. CI deploy on push to main via OIDC role `guided-repl-github-deploy` (`.github/workflows/guided-repl.yml`); one-time provisioning via `apps/guided-repl/scripts/bootstrap-infra.sh` (admin profile). Cache: immutable except no-cache `index.html`. Own-domain migration later = cert + `CustomDomain` param + DNS.
+- App env: `VITE_FIXTURE_VERSION` (fixture path pin). No backend deployed yet (Phase B / live mode will need one — the historical backend env vars were `E2B_API_KEY`, `E2B_TEMPLATE`, `IDLE_TIMEOUT_MS`, `SESSION_TOKEN_CAP`).
 
 ## Status
-MVP (single commit); functional for single/multi-prompt sessions. Phase 2 (guided lessons on top of the same event stream) planned.
+MVP (single commit); functional for single/multi-prompt sessions. Direction locked: [[Claude REPL Business Plan]] (v1.1 — guided free tier + metered wallet) and [[Claude REPL Lesson Plan]] (v1.0 — 8-lesson guided spine). Phase A/B technical architecture done: [[Claude REPL Architecture]] (v1.0). **Phase A MVP rebuilt greenfield (2026-07-02)** at `projects/{packages/guided-repl-protocol, services/guided-repl-seeder, apps/guided-repl}` — the prior claude-repl codebase was deleted; the notes [[Claude REPL Frontend]]/[[Claude REPL Backend]]/[[Claude REPL Protocol]] describe that deleted MVP and are historical. Greenfield MVP with real recorded fixtures (local `claude -p` runner; E2B seam stubbed). **All 8 lessons live (2026-07-03)**: spine v1.1 recorded (~20 live runs, snapshot chain l1→l8), quiz assertions + L2 step-through annotations, CLI-style UI (⏺/⎿ transcript, explorer tree) — arch doc v1.1 amendments. 163 unit tests + 17 Playwright e2e, CI + DAG↔fixtures/redaction gates. Deviation from arch doc: frames are nested `{type, payload}` (see FIXTURE_FORMAT.md). File preview shipped 2026-07-03 ([[Claude REPL File Preview]] P-A/P-B: sandboxed HTML+Markdown preview tabs; JS rendering = P-C later) + lesson-kind rail chips (quiz/check) + file-tree hover fix; 74 unit / 19 e2e. Next: live BYOK transport; E2B runner; advanced-track content; `--resume` continuity beat; preview P-C.
 
 ## Links
 - Part of: [[Projects MOC]] · also under [[LLM Engineering MOC]]
+- Plans: [[Claude REPL Business Plan]] · [[Claude REPL Lesson Plan]] · [[Claude REPL Architecture]] · [[Claude REPL File Preview]]
 - Repo: `personal/projects/{apps/claude-repl, packages/claude-repl-protocol, services/claude-repl-backend}`
