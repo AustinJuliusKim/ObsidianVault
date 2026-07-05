@@ -37,9 +37,9 @@ None
 None
 
 ## Counts
-- Notes: 23
+- Notes: 24
 - Links checked: 114
 - Broken links: 0
 - Orphans: 0
-- Repo claim candidates: 11 (0 stale, 3 aspirational-phase-B, 3 aspirational-future-docs, 5 historical)
+- Repo claim candidates: 11 (0 stale, 5 historical, 6 aspirational)
 - Warnings: 0
