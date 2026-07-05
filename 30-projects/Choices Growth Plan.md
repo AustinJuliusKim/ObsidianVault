@@ -5,14 +5,17 @@ tags: [project, webapp, planning, growth, monetization]
 type: project
 status: draft
 created: 2026-07-01
-updated: 2026-07-01
+updated: 2026-07-04
 related: [[Choices Webapp]], [[Projects MOC]]
 ---
 # Choices Growth Plan
 
 Strategic roadmap for scaling [[Choices Webapp]] from a personal two-player game into a shareable product with revenue potential. Core insight driving everything: the game solves decision apathy for "what should we eat" — the natural end of every game is a food order, which makes delivery integration the monetization engine rather than a bolt-on.
 
-**Version:** v1.2 (2026-07-01) — premium = subscription only (lifetime unlock rejected); meal-kit CPA added to winner-screen spec with cook-at-home detection (§2a, §6)
+**Version:** v1.5 (2026-07-04) — tip jar shipped (Venmo + Stripe PWYW link, post-value placements) with premium-interest tracking; pricing research note added to §2a (market band is $4–8/mo, $2.50 flagged for revisit)
+*v1.4 (2026-07-04) — iOS §3 restructured into a two-phase ladder: Phase A free-tier Capacitor build now, Phase B paid launch (enrollment deferred to the launch gate)*
+*v1.3 (2026-07-04) — cost-first re-sequencing:* Tier-1 hardening promoted to step 1 and now in implementation (feature/tier1-hardening, verified on the preview stack); Tier-1 design decisions locked (§10b); iOS readiness checklist added (§3); Capacitor pulled up in sequencing behind cost work
+*v1.2 (2026-07-01) — premium = subscription only (lifetime unlock rejected); meal-kit CPA added to winner-screen spec with cook-at-home detection (§2a, §6)*
 
 ## Decisions (locked 2026-07-01)
 - **Ambition:** Real side business — **target $5k+/mo**.
@@ -60,9 +63,9 @@ Priority order, lowest friction first:
 |---|---|---|
 | **Meal-kit CPA** ⭐ | "Cook at home" winners → HelloFresh/Factor-style referrals; meal-kit CPAs are rich (~$10–20+/signup vs ~$5 delivery) | Highest-value affiliate line; add to §6 winner-screen mix |
 | **Restaurant gift cards** | Commission per sale via gift-card networks; **no new-customer restriction** (unlike delivery CPAs) | "Gift a dinner" also fits couples gifting |
-| ~~Lifetime premium unlock~~ | **REJECTED (2026-07-01): subscription only** — recurring revenue compounds toward the $5k target; one price point simplifies the paywall | $2.50/mo sub is the sole premium SKU |
+| ~~Lifetime premium unlock~~ | **REJECTED (2026-07-01): subscription only** — recurring revenue compounds toward the $5k target; one price point simplifies the paywall | $2.50/mo sub is the sole premium SKU. **Pricing flag (research 2026-07-04): revisit before building** — comparable consumer tiers cluster at $4–8/mo (Sporcle $4, Kahoot Bronze $3.99, Blooket Plus $4.99, AhaSlides $7.95); $2.50 is below the band. Also reconsider a one-time "event pass" ($5–10) alongside the sub — episodic party hosts systematically refuse subscriptions, and the likeliest payers are teacher/HR-type hosts |
 | **Cosmetic IAP** | Themes, card decks, cut animations; monetizes without gating utility; couples gifting angle | Post-traction |
-| **Tip jar** | "Buy us a dinner" — zero friction, indie-couple story makes it land | Trivial revenue, ship anyway |
+| **Tip jar** | "Buy us a dinner" — zero friction, indie-couple story makes it land | ✅ **Shipped 2026-07-04**: Venmo link + Stripe pay-what-you-want Payment Link, env-var-gated (`VITE_TIP_*`). Placements (research-backed post-value moments only): "Game created" screen card, winner-screen compact line under the affiliate card, landing footer. Plus a "Premium coming soon" tease on the created screen logging `premium-interest` via the linkClick pipeline — free interest data ahead of the premium build. Tip UI is **web-only** (hidden in the Capacitor shell): Apple 3.1.1 requires IAP for in-app developer tips, external payment links risk rejection. Expectation set honestly: comparable apps see ~0.01–0.1% tip conversion (Spliit: $42 from 30k users) — goodwill + hosting money |
 | **Brand preset packs** | Sponsored curated lists (adjacent to sponsored slots) | Later, needs volume |
 
 **Infra cost offset (reframe: make costs tiny, don't "cover" them):**
@@ -85,6 +88,23 @@ Don't rewrite. Ladder of effort:
 | React Native rewrite | months | Only if deep native features needed; currently none are |
 
 Capacitor wraps the existing React 18 + Vite build; backend unchanged except adding an APNs sender path next to Web Push (or route both through a service like OneSignal to keep Lambda simple). App Store review note: Apple dislikes bare web wrappers — native push, haptics on elimination, and share-sheet integration are enough native surface to pass.
+
+### iOS two-phase ladder (revised 2026-07-04: build free now, pay to launch)
+
+**Phase A — working iOS app, $0 (in progress, branch `feature/ios-capacitor`):**
+- Capacitor 8 wrap (SPM, no CocoaPods; Xcode 26; appId `com.austinjuliuskim.choices`), WebView origin `capacitor://localhost` — API CORS allowlists that origin on the Function URL (CloudFormation-only edit; the AWS console UI rejects custom schemes).
+- Native polish that doubles as the review surface later: **haptics on cut + winner**, **native share sheet** for invites (share URL is always the web origin, never `capacitor://`), affiliate links via SFSafariViewController.
+- Turn updates = existing adaptive polling. Web-push/service worker are inert in WKWebView, and **free provisioning has no push entitlement anyway** — APNs is structurally a Phase B item.
+- Testing: iOS Simulator (no Apple account needed) + free "personal team" on-device installs (7-day profile expiry, 3-app limit, Developer Mode required on the phone).
+- Validation goal: full games played on a real iPhone against prod; wife-approval of the native feel.
+
+**Phase B — pay to launch (gate: Phase A validated + go decision):**
+- [ ] Enroll in Apple Developer Program ($99/yr — approval takes days; enroll at the go decision, not before).
+- [ ] APNs key + backend sender: extend `backend/push.mjs` + `subscribe` action with a platform discriminator; device tokens via `@capacitor/push-notifications`.
+- [ ] Universal links: `/.well-known/apple-app-site-association` on the existing S3+CloudFront site (SPA-rewrite function already passes dotted paths through) + Associated Domains entitlement — invite links then open the app.
+- [ ] App Store assets per locked ASO (§9): name **"Choices"**, subtitle *"Decide what to eat, together"*; screenshots; privacy questionnaire = no accounts, no tracking (affiliate links disclosed).
+- [ ] TestFlight beta → review (guideline 4.2 minimum-functionality: Phase A's haptics/share/browser polish is the answer).
+- Note: Tier-1 hardening (§10b) is Capacitor-compatible by construction — the wrapped app calls the same hardened `/api` CloudFront origin as the web app.
 
 ## 4. Moderation
 
@@ -373,20 +393,36 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 
 **Effort:** ~2–4 days of Sonnet work total (P1 ~1d, P2 ~1–2d, P3 ~0.5d).
 
+### 10b. Tier-1 design decisions (locked 2026-07-04, revised same day after pricing-plan discovery; on `main`)
+
+**Discovery (2026-07-04):** the prod distribution is subscribed to a **CloudFront Free flat-rate pricing plan** (WAF/DNS/TLS bundled, 1M req + 100GB/mo allowance, no overages). Decision: **stay on the plan** ($0/mo beats ~$11/mo self-managed WAF). Plan constraints that reshaped Tier-1: the protection-pack web ACL (`CreatedByCloudFront-*`) can't be removed/replaced; custom cache policies are Business-tier+; WAF is capped at 5 rules, plain per-IP rate rules only (no scope-down/URI/body match). Re-evaluate (cancel plan → PAYG, restore custom policies + git WAF) if the app outgrows the 1M req/mo allowance — the adapted design is portable both ways.
+
+- **Topology:** one CloudFront distribution — add the Function URL as a second origin on the existing `SiteDistribution` with an `/api*` behavior. Same-origin API (`choices.austinjuliuskim.com/api`) kills CORS preflights; one WAF covers site + API.
+- **getState → GET** (`/api?action=getState&pairingId=…`) — kept for portability, but the `/api*` behavior uses managed `CachingDisabled`: custom cache policies are excluded by the plan, and the caching-enabled managed policies put `host` in the cache key, which Lambda Function URL origins reject. No edge caching on the API; adaptive polling + rate limit are the load/cost controls.
+- **Cache-safety invariant (kept):** `publicState` carries no `code` — `claimSeat` re-mints seat tokens from the code alone, so it must never appear in a response that could ever be cached. Client persists `code` in localStorage identity instead.
+- **SPA fallback:** distribution-wide `CustomErrorResponses` (403/404→200 index.html) would corrupt API error bodies — replaced by a viewer-request CloudFront Function on the default behavior only (CloudFront Functions are included on all plan tiers).
+- **WAF:** lives in the plan's protection pack (`CreatedByCloudFront-8bb2952d`), managed via WAF console/API — **not in git** (plan blocks ACL replacement; the standalone edge stack was built, then deleted). Contents: 3 AWS managed groups (IP reputation, Common, Known Bad Inputs) + `ChoicesRateLimitPerIp` 600 req/5min/IP (all traffic — plan forbids scope-down, so no createPairing-specific rule; generic cap + billing alarms are the backstop). All **Count mode** until soak completes.
+- **Origin lock:** Function URL stays `AuthType: NONE`; CloudFront adds a secret `x-origin-verify` origin header the handler enforces behind an `ENFORCE_ORIGIN_HEADER` flag (enabled only after frontend cutover). OAC/IAM signing rejected (breaks simple POST clients).
+- **Idempotency:** `version` attribute + conditional writes on pairing puts (also fixes a pre-existing lost-update race); client `actionId` UUID on eliminate/rematch with `lastActionId` replay in the handler. `game.mjs` stays pure. Client mutation wrapper: ≤3 retries, 400ms·2ⁿ + jitter, network/429/5xx only.
+- **Adaptive polling state machine:** hidden tab **paused** (immediate refetch on visible); opponent's turn 3s; my turn 30s; waiting-for-join 15s; complete 30s; error backoff ×2 to 60s; ±20% jitter everywhere.
+- **Billing alarms:** account-scoped + us-east-1-only + outside the least-privilege deploy role → separate `ops/billing-alarms.yaml`, deployed once manually with admin creds: SNS→email, $10/mo budget (80/100% actual, 100% forecast), anomaly monitor with IMMEDIATE $5 subscription.
+- **Rollout:** everything verified on the `ChoicesWebApp-preview` stack first; phased flips (frontend cutover → origin-header enforce → WAF Block) land as separate merges to main.
+
 ### Model routing
 - Fable/Opus: this architecture review (done; revisit at Tier-2 trigger)
 - Sonnet: WAF/CloudFront config, adaptive polling, EMF metrics, canary script, SQS push worker
 - Haiku: quota limit research, AppSync Events vs. API GW WebSocket pricing comparison
 
-## Suggested sequencing
+## Suggested sequencing (re-ordered v1.3: cost-first, iOS pulled up)
 
-1. **Brand voice + copy pass (§9)** — name locked as "Choices"; rewrite invite/push/reveal/onboarding + App Store ASO subtitle in the teasing "give them Choices" voice; "cut" verb throughout
-2. **Tier-1 hardening + observability basics (§10)** — WAF + adaptive polling + idempotency keys + billing alarm + game-loop canary; everything else in §10 waits for a growth trigger
-3. Apply to affiliate programs (approval lag) + ship §6 deep links with "cut" verb rename
-4. OG link previews + profanity filter (growth + its prereq)
-5. **Shareable reveal card** (§8 channel #1 — users generate the marketing)
-6. Places-powered pre-seeding — now core product (§8)
-7. Capacitor iOS app w/ native push
+1. **Tier-1 hardening (§10, §10b)** — ✅ deployed to prod 2026-07-04 (origin-lock + WAF Block flips pending soak); canary/EMF observability follows; everything else in §10 waits for a growth trigger
+2. **Brand voice + copy pass (§9)** — name locked as "Choices"; rewrite invite/push/reveal/onboarding + App Store ASO subtitle in the teasing "give them Choices" voice; "cut" verb throughout
+3. **Capacitor iOS app (§3 Phase A)** ← *in implementation 2026-07-04* — free-tier build + local validation; **Apple Developer enrollment deferred to the Phase B launch gate** (no fee until the app has proven itself on-device)
+4. Affiliate deep links — ✅ shipped 2026-07-04 (merged); apply to Impact programs (approval lag is the long pole)
+   - Tip jar + premium-interest tease — ✅ shipped 2026-07-04 (rode the same post-value surfaces; see §2a table). Ops to activate: create the Stripe PWYW Payment Link, set `VITE_TIP_VENMO_URL` / `VITE_TIP_STRIPE_URL` GitHub repo variables
+5. OG link previews + profanity filter (growth + its prereq)
+6. **Shareable reveal card** (§8 channel #1 — users generate the marketing)
+7. Places-powered pre-seeding — now core product (§8)
 8. Group mode validation — V3 reducer + Monte Carlo + playtest (§7)
 9. Premium tier → sponsored slots → partnership pitch
 
