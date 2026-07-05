@@ -92,7 +92,7 @@ Capacitor wraps the existing React 18 + Vite build; backend unchanged except add
 ### iOS two-phase ladder (revised 2026-07-04: build free now, pay to launch)
 
 **Phase A — working iOS app, $0 (in progress, branch `feature/ios-capacitor`):**
-- Capacitor 8 wrap (SPM, no CocoaPods; Xcode 26; appId `com.austinjuliuskim.choices`), WebView origin `capacitor://localhost` — API CORS allowlists that origin on the Function URL (CloudFormation-only edit; the AWS console UI rejects custom schemes).
+- Capacitor 8 wrap (SPM, no CocoaPods; Xcode 26; appId `com.austinjuliuskim.choices`), WebView origin `capacitor://localhost`. **CORRECTION (2026-07-05):** that origin *cannot* be allowlisted on the Function URL — Lambda rejects non-http(s) CORS origins entirely (failed the prod deploy, stack rolled back; preview's `*` wildcard had masked it). Solved via **CapacitorHttp** in `capacitor.config.json`: the native layer makes the API requests, so WKWebView CORS never applies. Lesson: preview with wildcard CORS can't validate CORS changes.
 - Native polish that doubles as the review surface later: **haptics on cut + winner**, **native share sheet** for invites (share URL is always the web origin, never `capacitor://`), affiliate links via SFSafariViewController.
 - Turn updates = existing adaptive polling. Web-push/service worker are inert in WKWebView, and **free provisioning has no push entitlement anyway** — APNs is structurally a Phase B item.
 - Testing: iOS Simulator (no Apple account needed) + free "personal team" on-device installs (7-day profile expiry, 3-app limit, Developer Mode required on the phone).
