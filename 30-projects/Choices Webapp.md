@@ -5,7 +5,7 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-02
+updated: 2026-07-04
 related: [[Projects MOC]], [[Choices Growth Plan]]
 ---
 # Choices Webapp
@@ -40,6 +40,10 @@ Fully serverless, shareable social game on AWS free tier. Turn alerts via Web Pu
 
 ## Status
 Deployed at `choices.austinjuliuskim.com` (custom domain + ACM cert); v1 complete (last substantive commit Jun 7, 2026). Now executing a growth + monetization push — see [[Choices Growth Plan]].
+
+Affiliate deep links + iOS-native UI + preview-stack deploys merged 2026-07-04 (PR #1). **Tier-1 cost hardening deployed to prod 2026-07-04**: API behind CloudFront at `https://choices.austinjuliuskim.com/api` (same-origin, no CORS preflights), adaptive polling (3s hot / 15s waiting / 30s idle / paused hidden), idempotent mutations (actionId replay + optimistic locking), billing alarms (BillingAlarms stack). WAF rate limiting lives in the CloudFront pricing-plan protection pack (Count mode, out of git — see [[Choices Growth Plan]] §10b for the plan constraints that shaped this). Still pending: origin-header enforcement (~day after cutover) and WAF Count→Block after soak.
+
+**iOS Phase A in progress** (2026-07-04, branch `feature/ios-capacitor`): Capacitor 8 wrap on Apple's free tier (simulator + personal-team device installs; no paid enrollment until launch). Native haptics/share/browser polish; turn updates via the existing adaptive polling (no push entitlement on free tier). Two-phase ladder in [[Choices Growth Plan]] §3.
 
 ## Growth Plan
 See **[[Choices Growth Plan]]** — the strategy, monetization, and sequencing doc. The earlier free-growth-experiment framing (no monetization, no accounts, no native apps) was superseded 2026-07-01: Choices is now a real side-business attempt — target $5k+/mo, food-focused ("what should we eat" category), accounts acceptable for premium, Capacitor iOS app on the ladder.
