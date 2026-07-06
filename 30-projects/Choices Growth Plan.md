@@ -431,6 +431,7 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 
 - Name: which direction? (Pending Austin — see §9 shortlist.)
 - Sponsored slots eventually need light sales or self-serve tooling — appetite for that side of the business?
+- Streak *visibility* is premium-gated today, but 2026-07-05 market research (Duolingo, chess.com, Wordle) is unanimous: never paywall seeing the streak — it's the retention engine; monetize protection (freezes/repair) and derived insights instead. Revisit the premium gate split?
 
 ## Links
 - Part of: [[Choices Webapp]], [[Projects MOC]]
