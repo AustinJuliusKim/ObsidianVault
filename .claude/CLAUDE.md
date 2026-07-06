@@ -42,6 +42,9 @@ The token-savings engine is the retrieval protocol. **Do not scan the whole vaul
 - If unsure, read MOC link lists + frontmatter only, then choose what to open.
 - Full details and the write protocol live in the **`wiki` skill** (`.claude/skills/wiki/SKILL.md`) — invoke it for any vault read/write task.
 
+## Standing context
+- For any **game design, feature, or copy work** (Choices or future games), always load `30-projects/Studio Design Constitution.md` — every product decision must pass its rubric, ethic, and kill tests.
+
 ## Guardrails
 - Until the Obsidian MCP is active, **do not bulk-rename or delete linked notes** — wikilink backlinks break silently. Safe zones for automation: `00-inbox/`, raw dumps, new drafts.
 

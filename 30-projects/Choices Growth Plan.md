@@ -5,8 +5,8 @@ tags: [project, webapp, planning, growth, monetization]
 type: project
 status: draft
 created: 2026-07-01
-updated: 2026-07-05
-related: [[Choices Webapp]], [[Projects MOC]]
+updated: 2026-07-06
+related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Projects MOC]]
 ---
 # Choices Growth Plan
 
@@ -435,6 +435,7 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 
 ## Links
 - Part of: [[Choices Webapp]], [[Projects MOC]]
+- Strategy above: [[Relational Games Studio Roadmap]] · Rules: [[Studio Design Constitution]] · GTM: [[Choices Marketing Proposal]]
 
 ## Model routing (for execution)
 - Opus: partnership pitch strategy, group-mode game logic design
