@@ -47,6 +47,8 @@ Affiliate deep links + iOS-native UI + preview-stack deploys merged 2026-07-04 (
 
 **Accounts + billing live 2026-07-05**: optional Cognito Google sign-in (hosted UI `choices-auth.auth.us-west-2.amazoncognito.com`, PKCE) and Stripe premium checkout ($2.99/mo, $24/yr) live on prod; preview stack mirrors with test-mode Stripe and `choices-auth-preview`. Webhook at `/api/stripe-webhook` (400 on unsigned posts — verified). Gotcha recorded: `deploy-frontend.sh` bakes `VITE_TIP_*` and Cognito env at build time — a local run without the GitHub repo variables ships a build with the tip jar hidden (CI injects them; export them for local runs).
 
+**Persistent account nav built 2026-07-05** (branch `feature/account-corner-nav`, PR open): floating top-right corner pill on all views → `#/account` — subdued "Sign in" chip for guests, 📜 glyph + cached 🔥streak for signed-in (premium, streak ≥ 1). Streak comes from a per-sub localStorage cache written through `getMe` (`frontend/src/streakCache.js`) — zero new API calls, consistent with Tier-1 cost hardening. Backed by market research (Wordle/NYT, Duolingo, Monkeytype, lichess): persistent identity affordance + existing post-game conversion line = "pattern C". Hidden in the iOS shell via `authEnabled`.
+
 ## Growth Plan
 See **[[Choices Growth Plan]]** — the strategy, monetization, and sequencing doc. The earlier free-growth-experiment framing (no monetization, no accounts, no native apps) was superseded 2026-07-01: Choices is now a real side-business attempt — target $5k+/mo, food-focused ("what should we eat" category), accounts acceptable for premium, Capacitor iOS app on the ladder.
 
