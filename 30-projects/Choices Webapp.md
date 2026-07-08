@@ -5,8 +5,8 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-05
-related: [[Projects MOC]], [[Choices Growth Plan]]
+updated: 2026-07-07
+related: [[Projects MOC]], [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]]
 ---
 # Choices Webapp
 Lightweight two-player, turn-based elimination game. Player A creates a game, pre-seeds 4 choices, and shares a human-friendly code (e.g. `PLUM-42`); Player B joins and they alternate eliminating choices (B → A → B) until one winner remains. No accounts — flows through messaging apps.
@@ -46,6 +46,14 @@ Affiliate deep links + iOS-native UI + preview-stack deploys merged 2026-07-04 (
 **iOS Phase A in progress** (2026-07-04, branch `feature/ios-capacitor`): Capacitor 8 wrap on Apple's free tier (simulator + personal-team device installs; no paid enrollment until launch). Native haptics/share/browser polish; turn updates via the existing adaptive polling (no push entitlement on free tier). Two-phase ladder in [[Choices Growth Plan]] §3.
 
 **Accounts + billing live 2026-07-05**: optional Cognito Google sign-in (hosted UI `choices-auth.auth.us-west-2.amazoncognito.com`, PKCE) and Stripe premium checkout ($2.99/mo, $24/yr) live on prod; preview stack mirrors with test-mode Stripe and `choices-auth-preview`. Webhook at `/api/stripe-webhook` (400 on unsigned posts — verified). Gotcha recorded: `deploy-frontend.sh` bakes `VITE_TIP_*` and Cognito env at build time — a local run without the GitHub repo variables ships a build with the tip jar hidden (CI injects them; export them for local runs).
+
+**Suggestion engine (Phases 0/1/3) + growth features built 2026-07-07** — five branches pushed, PRs pending (merge order: suggest-phase0 → suggest-typeahead → fill-my-4; og-previews and reveal-copy independent). Per [[Choices Suggestion Engine Plan]]:
+- `feature/suggest-phase0`: `HIST#{pairingId}` pair-memory item (capped 200 LRU, TTL tied to pairing lifecycle) folded into the completion transaction via new pure `backend/history.mjs`; anonymized per-game JSON to new private `SuggestDataBucket` (`entries/dt=…/`, HMAC pairHash, no pairing ids — `AnonSalt` SAM param gates it). `userPut` renamed `versionedPut`.
+- `feature/suggest-typeahead`: `ChoiceInput.jsx` typeahead on create + rematch inputs — L1 pair memory (new `getPairHistory` action, fetched once, never on the poll path; ranking in pure `frontend/src/suggest.js`) + L3 Google Places Autocomplete (New) proxied server-side (`backend/places.mjs`, session-tokened, Essentials-tier details terminates billing session). Dormant without `PlacesApiKey` (stack output → `VITE_PLACES_ENABLED`).
+- `feature/fill-my-4`: ✨ Fill my 4 via Bedrock Converse (`backend/suggestai.mjs`, Claude Haiku 4.5 profile via `BedrockModelId` param). 3 free/month — counter on the pairing (rematch) or USER# `aiUses` (create screen, sign-in required — documented deviation); premium unlimited; actionId replay never re-invokes Bedrock.
+- `feature/og-previews`: share links now `/j/{CODE}` — new CloudFront behavior → Lambda prerenders OG meta (choices as description, `og-card.png` 1200×630 checked in) + instant redirect into the join flow; `obscenity`-based `backend/moderation.mjs` downgrades profane labels to a generic description at render time only (submission never blocked); server-side 60-char cap + control-char strip in `createGame`.
+- `feature/reveal-copy`: `frontend/src/revealCard.js` canvas share card + 📸 button on the winner face (native share via new `@capacitor/filesystem`, web share, download fallback; `share-reveal` support-platform beacon) + Growth §9 copy pass (landing/invite/join/banners/pushes/title/manifest → "Decide what to eat, together").
+New actions: `getPairHistory | placesSuggest | placeDetails | fillMyFour` and `GET /j/{code}`. All features config-dormant (AnonSalt / PlacesApiKey / BedrockModelId blank = off); ops steps live in each PR description.
 
 **Persistent account nav built 2026-07-05** (branch `feature/account-corner-nav`, PR open): floating top-right corner pill on all views → `#/account` — subdued "Sign in" chip for guests, 📜 glyph + cached 🔥streak for signed-in (premium, streak ≥ 1). Streak comes from a per-sub localStorage cache written through `getMe` (`frontend/src/streakCache.js`) — zero new API calls, consistent with Tier-1 cost hardening. Backed by market research (Wordle/NYT, Duolingo, Monkeytype, lichess): persistent identity affordance + existing post-game conversion line = "pattern C". Hidden in the iOS shell via `authEnabled`.
 
