@@ -10,7 +10,7 @@ related: ["[[Choices Growth Plan]]", "[[Studio Design Constitution]]", "[[Choice
 ---
 # Choices Suggestion Engine Plan
 
-**Version:** v0.3 (2026-07-07) — Phases 0, 1, 3 implemented (branches `feature/suggest-phase0` → `feature/suggest-typeahead` → `feature/fill-my-4`, PRs pending merge + ops: AnonSalt param, Places key, Bedrock model access — see PR descriptions). Create-screen Fill-my-4 counts on USER# with sign-in required (no pairing exists there — documented deviation from "counter on the pairing"). Code status lives in [[Choices Webapp]].
+**Version:** v0.3 (2026-07-07) — Phases 0, 1, 3 implemented (branches `feature/suggest-phase0` → `feature/suggest-typeahead` → `feature/fill-my-4`, PRs pending merge + ops: AnonSalt param, Places key, Bedrock model access — see PR descriptions). Create-screen Fill-my-4 counts on USER# with sign-in required (no pairing exists there — documented deviation from "counter on the pairing"). Code status lives in [[Choices Webapp]]. locationBias promoted from deferred and built same day (PR #16, stacked on the Fill-my-4 PR): CloudFront viewer-geo headers via a custom /api* origin request policy — city-level, zero prompts, verified on preview.
 *v0.2 (2026-07-06) — gating, data policy, and typo-tolerance decisions locked*
 
 ## Decisions (locked 2026-07-06)
