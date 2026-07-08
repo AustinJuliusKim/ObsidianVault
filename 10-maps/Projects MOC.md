@@ -18,6 +18,7 @@ updated: 2026-07-06
   - [[Choices Growth Plan]] — growth + monetization strategy (target $5k/mo, food-focused, affiliate → premium → partnerships)
   - [[Choices Marketing Proposal]] — GTM/content plan: TikTok teasers + dev blog, launch sequence keyed to App Store (v0.2)
   - [[Choices Suggestion Engine Plan]] — layered typeahead (pair memory → global trie → Places) + Fill-my-4 LLM assist; phases 0–5 (v0.2)
+  - [[Choices CloudFront PAYG Migration Plan]] — deferred playbook: leave the CloudFront Free plan → WAF-in-git, geo headers, edge-cached getState (~$10/mo)
 - [[Claude REPL]] — browser playground running Claude Code in per-session E2B sandboxes (BYOK)
   - [[Claude REPL Business Plan]] — guided free tier + metered wallet model (v1.1, locked)
   - [[Claude REPL Lesson Plan]] — 8-lesson guided spine + advanced paid track (v1.0, locked)
