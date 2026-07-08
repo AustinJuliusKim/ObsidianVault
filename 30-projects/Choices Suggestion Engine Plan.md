@@ -5,12 +5,13 @@ tags: [choices, architecture, ai, search, planning]
 type: project
 status: draft
 created: 2026-07-06
-updated: 2026-07-06
+updated: 2026-07-07
 related: ["[[Choices Growth Plan]]", "[[Studio Design Constitution]]", "[[Choices Webapp]]"]
 ---
 # Choices Suggestion Engine Plan
 
-**Version:** v0.2 (2026-07-06) — gating, data policy, and typo-tolerance decisions locked
+**Version:** v0.3 (2026-07-07) — Phases 0, 1, 3 implemented (branches `feature/suggest-phase0` → `feature/suggest-typeahead` → `feature/fill-my-4`, PRs pending merge + ops: AnonSalt param, Places key, Bedrock model access — see PR descriptions). Create-screen Fill-my-4 counts on USER# with sign-in required (no pairing exists there — documented deviation from "counter on the pairing"). Code status lives in [[Choices Webapp]].
+*v0.2 (2026-07-06) — gating, data policy, and typo-tolerance decisions locked*
 
 ## Decisions (locked 2026-07-06)
 - **Fill-my-4 gating: N free/month, unlimited on premium.** Default N=3 (enough to form the habit, scarce enough to sell the sub — tune against conversion data). Free uses reset monthly; counter on the pairing, not the device.
@@ -64,10 +65,10 @@ v1: score = 3·pair_winner_freq + 2·pair_entry_freq·recency + 1·global_popula
 ## Phases
 | Phase | What | Effort | Gate |
 |---|---|---|---|
-| **0 — Log now** | Persist finished-game entries/winners past TTL: per-pair `HIST#` item + anonymized append to S3 (daily partition). Data compounds — every week unlogged is training data lost | ~1d Sonnet | Ship ASAP |
-| **1 — Typeahead MVP** | L1 pair memory + L3 Places sessions, merge/rank v1 | 2–4d Sonnet | After Phase 0 |
+| **0 — Log now** ✅ built 2026-07-07 | Persist finished-game entries/winners past TTL: per-pair `HIST#` item + anonymized append to S3 (daily partition). Data compounds — every week unlogged is training data lost | ~1d Sonnet | Ship ASAP |
+| **1 — Typeahead MVP** ✅ built 2026-07-07 | L1 pair memory + L3 Places sessions, merge/rank v1 | 2–4d Sonnet | After Phase 0 |
 | **2 — Global trie** | Nightly aggregate + canonicalization + CloudFront trie; L2 in client | 2–3d Sonnet | ~1k games logged |
-| **3 — Fill my 4** | RAG-lite Lambda + create-screen UI; premium gating decision | 2–3d Sonnet | Phase 1 live |
+| **3 — Fill my 4** ✅ built 2026-07-07 | RAG-lite Lambda + create-screen UI; premium gating decision | 2–3d Sonnet | Phase 1 live |
 | **4 — Taste vectors** | Nightly pair embeddings + rerank | 2d Sonnet | Phase 2 + 3 data |
 | **5 — Fuzzy at scale** | OpenSearch (or typo-tolerant client matcher first — try edit-distance-1 on trie before buying infra) | — | Scale trigger above |
 
