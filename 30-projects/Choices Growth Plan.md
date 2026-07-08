@@ -6,7 +6,7 @@ type: project
 status: draft
 created: 2026-07-01
 updated: 2026-07-07
-related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Choices Suggestion Engine Plan]], [[Projects MOC]]
+related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Choices Suggestion Engine Plan]], [[Choices CloudFront PAYG Migration Plan]], [[Projects MOC]]
 ---
 # Choices Growth Plan
 
