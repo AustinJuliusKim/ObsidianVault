@@ -5,8 +5,8 @@ tags: [project, claude-code, e2b, websocket]
 type: project
 status: developing
 created: 2026-07-01
-updated: 2026-07-02
-related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Architecture]]
+updated: 2026-07-09
+related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Architecture]]
 ---
 # Claude REPL
 Browser-based playground that teaches Claude Code. A split pane shows a CLI-like terminal (left) and a live workspace with file tree + diffs (right). Prompts run Claude Code **headless inside an isolated E2B sandbox, one per session**. **BYOK** — the user supplies their own Anthropic API key.
@@ -45,6 +45,8 @@ The shared [[Claude REPL Protocol]] is the trust boundary (`parseClientMessage` 
 
 ## Status
 MVP (single commit); functional for single/multi-prompt sessions. Direction locked: [[Claude REPL Business Plan]] (v1.1 — guided free tier + metered wallet) and [[Claude REPL Lesson Plan]] (v1.0 — 8-lesson guided spine). Phase A/B technical architecture done: [[Claude REPL Architecture]] (v1.0). **Phase A MVP rebuilt greenfield (2026-07-02)** at `projects/{packages/guided-repl-protocol, services/guided-repl-seeder, apps/guided-repl}` — the prior claude-repl codebase was deleted; the notes [[Claude REPL Frontend]]/[[Claude REPL Backend]]/[[Claude REPL Protocol]] describe that deleted MVP and are historical. Greenfield MVP with real recorded fixtures (local `claude -p` runner; E2B seam stubbed). **All 8 lessons live (2026-07-03)**: spine v1.1 recorded (~20 live runs, snapshot chain l1→l8), quiz assertions + L2 step-through annotations, CLI-style UI (⏺/⎿ transcript, explorer tree) — arch doc v1.1 amendments. 163 unit tests + 17 Playwright e2e, CI + DAG↔fixtures/redaction gates. Deviation from arch doc: frames are nested `{type, payload}` (see FIXTURE_FORMAT.md). File preview shipped 2026-07-03 ([[Claude REPL File Preview]] P-A/P-B: sandboxed HTML+Markdown preview tabs; JS rendering = P-C later) + lesson-kind rail chips (quiz/check) + file-tree hover fix; 74 unit / 19 e2e. Next: live BYOK transport; E2B runner; advanced-track content; `--resume` continuity beat; preview P-C.
+
+**Lesson Engine migration implemented (2026-07-09)** per [[Claude REPL Lesson Engine Spec]] (v1.0) + [[Claude REPL Lesson Plan]] v1.1 — PRs #19–#22 open on AustinJuliusKim/projects (stacked: protocol → lessons → app → seeder/CI): new `packages/guided-repl-lessons` (YAML sources → compiled `lessons.json`; l1 hand-authored template, l2–l8 converted); Zod lesson schema + semantic anchors + `tty_chunk`/fixture-`kind` in `packages/guided-repl-protocol` (zod = its first dep); app gains headless `LessonEngine` (reducer, instructing→prompting→running→reflecting→graduated), left Rail (quizzes non-diegetic, collapses during runs), `PromptComposer` autocomplete replacing the three-button PromptBuilder (suggestions carry explicit `branchId` — fixes latent bug where duplicate-expectedPrompt branches l4 revise / l5 acceptEdits+bypass / l7 with / l8 sonnet were unreachable), TerminalDrill/shellTranscript machinery (tests only; L6/L8 drills authored later); `checkPromptJoin.js` replaced by suggestion↔branch coverage + anchor-drift + recompile-drift CI gates. Unit 89 (app) / 63 (protocol) / 18 (lessons) / 68 (seeder), e2e 26. Spec's `claude-repl-*` package names intentionally mapped to the repo's `guided-repl-*` naming.
 
 ## Links
 - Part of: [[Projects MOC]] · also under [[LLM Engineering MOC]]

@@ -5,8 +5,8 @@ tags: [project, claude-repl, architecture, fixtures, guided-mode]
 type: project
 status: developing
 created: 2026-07-02
-updated: 2026-07-02
-related: [[Claude REPL]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Protocol]], [[Claude REPL Backend]], [[Claude REPL Frontend]]
+updated: 2026-07-09
+related: [[Claude REPL]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Protocol]], [[Claude REPL Backend]], [[Claude REPL Frontend]]
 ---
 # Claude REPL — Technical Architecture (Phase A/B) (v1.0)
 
@@ -170,6 +170,8 @@ The `constrained` branch's fixture pins `expectedPrompt: "make a personal landin
 | Assertion cardinality | Exactly one per lesson | Keeps grading simple, deterministic | decided |
 | Assertion types | 4 fixed types | Covers file/terminal outcomes without a general expression language | decided |
 | Prompt input | Builder (structured), not freeform | Enables exact `expectedPrompt` matching (§4) | decided |
+
+**v1.2 amendment (2026-07-09) — superseded by the Lesson Engine.** This section's flat `lessons.json` shape (branches/branchConfig/promptChoices, one embedded assertion) is replaced per [[Claude REPL Lesson Engine Spec]]: lessons are authored as YAML in `packages/guided-repl-lessons` and compiled to a Zod-validated, steps-based manifest (`Step` union: instruction/promptBuilder/run/annotation/permissionPrompt/quiz/assertion/terminalDrill; annotations carry compiler-resolved semantic-anchor indices). The prompt builder's three-choice concatenation (and its `checkPromptJoin` CI rule) gave way to a `PromptComposer` autocomplete whose suggestions carry explicit `branchId`s — `matchPrompt` exact-matching remains the fallback contract for typed text. The `expectedPrompt` binding, one-assertion-per-lesson grading, and DAG↔fixtures CI gates all survive, now enforced by the lessons compiler plus a rewritten `checkLessons.js` (anchor-drift + recompile-drift gates).
 
 ## 9. Static hosting, CDN layout & versioning
 Layout: `/<claudeCodeVersion>/{lessons.json, fixtures/…, snapshots/…}`. App pins `VITE_FIXTURE_VERSION` explicitly — **never "latest"** — so a CDN publish can't silently change a running lesson under a learner. Immutable, long-TTL caching per version path. A hashed `manifest.json` provides integrity checking against tampered/corrupted fixture fetches. CDN host choice is flagged as an ops decision, not architectural.

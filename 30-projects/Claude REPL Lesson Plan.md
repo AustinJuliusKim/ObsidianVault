@@ -3,7 +3,7 @@ title: Claude REPL Lesson Plan
 aliases: [claude-repl-lessons]
 tags: [project, claude-repl, curriculum, guided-mode]
 type: project
-status: evergreen
+status: locked
 created: 2026-07-02
 updated: 2026-07-02
 related: [[Claude REPL]], [[Claude REPL Business Plan]], [[LLM Collaboration Rules]], [[Model Routing Strategy]], [[Context Budgeting]]
@@ -75,5 +75,6 @@ MCP servers · Skills/SKILL.md authoring · Hooks · Subagents · [[Model Routin
 Author **Lesson 1's full script** as the template for the other seven: exact prompt text, fixture branch specs, annotation copy, assertion definition, FS snapshots. Content authoring → then Phase A seeding runs.
 
 ## Changelog
+- **v1.1** (2026-07-09) — L6 and L8 absorb woven `TerminalDrill` micro-moments (first self-typed command; `git diff` + commit) per [[Claude REPL Lesson Engine Spec]]; specifics set during Lesson 1 script authoring.
 - **v1.0** (2026-07-02) — LOCKED. Spine v1.1 approved; lesson 1 = tiny web page; one-artifact-through-eight thread with snapshot modularity; 5-min budget with pacing/branch constraints. Business plan spine amended to match.
 - **v0.1** (2026-07-02) — Giants research; convergent primitives; spine v1.1 proposal; competitor map incl. claude.ai/code finding.
