@@ -5,7 +5,7 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-07
+updated: 2026-07-09
 related: [[Projects MOC]], [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]]
 ---
 # Choices Webapp
@@ -54,6 +54,8 @@ Affiliate deep links + iOS-native UI + preview-stack deploys merged 2026-07-04 (
 - `feature/og-previews`: share links now `/j/{CODE}` — new CloudFront behavior → Lambda prerenders OG meta (choices as description, `og-card.png` 1200×630 checked in) + instant redirect into the join flow; `obscenity`-based `backend/moderation.mjs` downgrades profane labels to a generic description at render time only (submission never blocked); server-side 60-char cap + control-char strip in `createGame`.
 - `feature/reveal-copy`: `frontend/src/revealCard.js` canvas share card + 📸 button on the winner face (native share via new `@capacitor/filesystem`, web share, download fallback; `share-reveal` support-platform beacon) + Growth §9 copy pass (landing/invite/join/banners/pushes/title/manifest → "Decide what to eat, together").
 New actions: `getPairHistory | placesSuggest | placeDetails | fillMyFour` and `GET /j/{code}`. All features config-dormant (AnonSalt / PlacesApiKey / BedrockModelId blank = off); ops steps live in each PR description.
+
+**✨ Fill my 4 live on prod + preview 2026-07-09** (PR #24, branch `ops/enable-fill-my-4`): AWS Bedrock Claude Haiku 4.5 model access approved, so the config-dormant feature was switched on by setting `BedrockModelId=us.anthropic.claude-haiku-4-5-20251001-v1:0` (US cross-region inference profile, us-west-2) in both `samconfig.toml` deploy blocks. **No source changed** — the feature shipped complete in PR #11 (`feature/fill-my-4`). That one param cascades: Lambda `BEDROCK_MODEL_ID` env → `aiEnabled()` true → `fillMyFour` action; `AiEnabled` stack output (`= HasBedrock`) → `deploy-frontend.sh` → `VITE_AI_ENABLED=true`, which un-hides the button. IAM for `bedrock:InvokeModel` was already in the template. Verified live end-to-end (`createPairing → claimSeat → fillMyFour` → 200 with 4 Haiku choices, `usesLeft:2`) on both stacks. Rollback = blank `BedrockModelId` + redeploy backend/frontend (feature goes dormant instantly, fully reversible).
 
 **Persistent account nav built 2026-07-05** (branch `feature/account-corner-nav`, PR open): floating top-right corner pill on all views → `#/account` — subdued "Sign in" chip for guests, 📜 glyph + cached 🔥streak for signed-in (premium, streak ≥ 1). Streak comes from a per-sub localStorage cache written through `getMe` (`frontend/src/streakCache.js`) — zero new API calls, consistent with Tier-1 cost hardening. Backed by market research (Wordle/NYT, Duolingo, Monkeytype, lichess): persistent identity affordance + existing post-game conversion line = "pattern C". Hidden in the iOS shell via `authEnabled`.
 
