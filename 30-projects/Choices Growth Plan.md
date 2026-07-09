@@ -5,7 +5,7 @@ tags: [project, webapp, planning, growth, monetization]
 type: project
 status: draft
 created: 2026-07-01
-updated: 2026-07-07
+updated: 2026-07-09
 related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Choices Suggestion Engine Plan]], [[Choices CloudFront PAYG Migration Plan]], [[Projects MOC]]
 ---
 # Choices Growth Plan
@@ -422,7 +422,7 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
    - Tip jar + premium-interest tease — ✅ shipped 2026-07-04 (rode the same post-value surfaces; see §2a table). Ops to activate: create the Stripe PWYW Payment Link, set `VITE_TIP_VENMO_URL` / `VITE_TIP_STRIPE_URL` GitHub repo variables — ✅ activated 2026-07-05 (live Payment Link set, replacing the test-mode link; tip links restyled as pill buttons: "☕ Coffee me" / "🥐 Thanks a latte")
 5. OG link previews + profanity filter (growth + its prereq) — ✅ built 2026-07-07 (branch feature/og-previews: /j/{code} origin-prerendered cards, render-time-only obscenity filter, join flow untouched)
 6. **Shareable reveal card** (§8 channel #1 — users generate the marketing) — ✅ built 2026-07-07 (branch feature/reveal-copy: canvas card + native/web share + share-reveal beacon)
-7. Places-powered pre-seeding — now core product (§8); spec'd in detail (typeahead layers + Fill-my-4) in [[Choices Suggestion Engine Plan]] — ✅ Phases 0/1/3 built 2026-07-07 (three stacked branches; dormant behind AnonSalt / PlacesApiKey / BedrockModelId ops tasks)
+7. Places-powered pre-seeding — now core product (§8); spec'd in detail (typeahead layers + Fill-my-4) in [[Choices Suggestion Engine Plan]] — ✅ Phases 0/1/3 built 2026-07-07 (three stacked branches; dormant behind AnonSalt / PlacesApiKey / BedrockModelId ops tasks). **Fill-my-4 enabled live on prod + preview 2026-07-09** (Bedrock Haiku 4.5 access granted, `BedrockModelId` set — PR #24; see [[Choices Webapp]]).
 8. Group mode validation — V3 reducer + Monte Carlo + playtest (§7)
 9. Premium tier → sponsored slots → partnership pitch
    - **Accounts + history + streaks + billing — ✅ built 2026-07-05** (branch feature/accounts-history, pulled forward from this slot): optional Cognito sign-in (**Google-only v1** — Sign in with Apple needs the $99 enrollment deferred to iOS Phase B), guest mode untouched, GAME# archives + USER# stats (daily play streak — the game has no per-player winner, so streaks are Duolingo-style play days), Stripe billing ($2.99/mo, $24/yr). **Ops to launch:** Google OAuth client (Cloud Console), Cognito domain prefix + callback params, Stripe live Prices + webhook endpoint, samconfig parameter_overrides for both stacks. Account/purchase UI is web-only; iOS shell honors entitlements (Apple 3.1.3) **Ops completed — live on prod + preview 2026-07-05**: Cognito hosted-UI domains `choices-auth` / `choices-auth-preview` (Google IdP), Stripe live Prices + webhook on prod, test-mode mirror on preview, samconfig overrides for both stacks. Launch surfaced two fixes: the template's UserPoolClient property name was invalid (`AllowedOAuthFlowsUserPoolClientEnabled` → `AllowedOAuthFlowsUserPoolClient`; never validated while condition-gated off) and the deploy IAM policy needed Cognito actions (`docs/iam-policy.json` re-synced to the live policy, folding in drifted CloudFront/WAF actions).
