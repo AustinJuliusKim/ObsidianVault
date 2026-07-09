@@ -50,8 +50,11 @@ Austin's pass for voice/accuracy → move to the blog repo when the static blog 
 ## Metrics
 Same loop as the proposal: subscribers + builder DMs; per-post UTM to the game. Weekly one-line review notes in the vault.
 
+## Shakedown log
+- **Run 1 (2026-07-08): "Game-first onboarding"** (Duolingo/Wordle pattern, Choices receipts) — drafted **in-session** (no `ant`/API key on the machine; per the first-posts allowance). Source pack + draft-v1 + thread at `00-inbox/blog-drafts/game-first-onboarding/`. Pipeline notes: PR bodies weren't needed for this one (product post — code-verified flow walk replaced them); the "one honest number" rule produced the strongest lines (2 taps, 0 signups, the `ghost` CSS class); Wordle web-verification added the closer (built for his partner). Template addition for next run: require a "delete test" style takeaway the reader can apply to their own product. This post joins the slate (7 banked).
+
 ## Next actions
-- [ ] First draft run (suggest: the CloudFront pricing-plan story — self-contained, strong hook, all sources exist today) as the pipeline shakedown; refine the voice pack from Austin's edits.
+- [x] First draft run — done 2026-07-08 ("Game-first onboarding", see Shakedown log); refine the voice pack from Austin's edits. CloudFront story remains next in the queue.
 - [ ] Resolve the blog hosting task (proposal: Haiku compares Substack-custom-domain vs static+email; Sonnet builds the winner).
 - [ ] Turn the pipeline into a repo skill once ≥2 posts have gone through it manually.
 
