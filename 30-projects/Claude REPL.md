@@ -5,8 +5,8 @@ tags: [project, claude-code, e2b, websocket]
 type: project
 status: developing
 created: 2026-07-01
-updated: 2026-07-09
-related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Architecture]]
+updated: 2026-07-12
+related: [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Accounts & Progress Spec]], [[Claude REPL Lesson Foundry Spec]], [[Claude REPL Architecture]]
 ---
 # Claude REPL
 Browser-based playground that teaches Claude Code. A split pane shows a CLI-like terminal (left) and a live workspace with file tree + diffs (right). Prompts run Claude Code **headless inside an isolated E2B sandbox, one per session**. **BYOK** — the user supplies their own Anthropic API key.

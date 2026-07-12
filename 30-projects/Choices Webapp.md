@@ -5,8 +5,8 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-09
-related: [[Projects MOC]], [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]]
+updated: 2026-07-12
+related: [[Projects MOC]], [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]], [[Choices Data Architecture Plan]]
 ---
 # Choices Webapp
 Lightweight two-player, turn-based elimination game. Player A creates a game, pre-seeds 4 choices, and shares a human-friendly code (e.g. `PLUM-42`); Player B joins and they alternate eliminating choices (B → A → B) until one winner remains. No accounts — flows through messaging apps.

@@ -5,10 +5,10 @@ tags: [project, claude-repl, lesson-engine, ux, schema]
 type: project
 status: locked
 created: 2026-07-09
-updated: 2026-07-09
+updated: 2026-07-11
 related: [[Claude REPL]], [[Claude REPL Lesson Plan]], [[Claude REPL Business Plan]], [[Claude REPL Protocol]]
 ---
-# Claude REPL — Lesson Engine Spec (v1.0 · LOCKED)
+# Claude REPL — Lesson Engine Spec (v1.1 · LOCKED)
 
 **Scope:** (1) lessons/quizzes as configurable data the UI renders; (2) UX separation of the REPL stage from the lesson/quiz spine; (3) task buttons → terminal autocompletions (PromptComposer). Extensible to dev-basics topics (git, CLI, npm, localhost).
 
@@ -44,12 +44,14 @@ Step =
  | Quiz          { id, question, options[], answerIdx, explainMd }   # rail-only
  | Assertion     { id, rule: AssertionRule }                 # declarative
  | TerminalDrill { id, expect: CmdMatcher, transcript: FixtureRef }  # woven dev-basics
+ | Capture       { id, fields: ["name"|"email"], purposeMd, optional, consent? }  # staged lead capture
 Fixture { schemaVersion, claudeCodeVersion, kind: "claudeStream" | "shellTranscript",
           events: [{ msg: ServerMsg | TtyChunk, delayMs, skippable }] }
 AssertionRule = streamEvent(match) | quizCorrect(stepId) | userChoice(equals)
               | diffTouchedOnly(paths) | drillPassed(stepId)   # JSON-logic style, data-only
 ```
 - **Semantic anchors, not raw indices:** annotations attach via selectors ("2nd `tool_use` where tool=Edit, file=index.html") so CI re-seeds don't orphan them; failed resolution = CI error.
+- **Interpolation rule:** fixtures may carry `{{userName}}`-style tokens in file-write events, diffs, preview HTML, and PromptComposer suggestions; the player substitutes at render time. Cosmetic-safe only (display changes, branch doesn't). **Hard security:** HTML-escape, ~30-char cap, charset allowlist, safe default — user input renders into a live preview (XSS surface). See [[Claude REPL Accounts & Progress Spec]].
 - **Fixture generalization is the dev-basics unlock:** `kind: shellTranscript` replays scripted git/CLI sessions through the same terminal pane and player. (Seed content: the beginner cheat sheet — terminal, npm, git, localhost.)
 - **Pacing:** per-event `delayMs` + `skippable` implements the 5-minute compressed-replay constraint from [[Claude REPL Lesson Plan]].
 
@@ -87,5 +89,6 @@ Replaces example-task buttons. Lives in the terminal pane; config-driven by the 
 Author **Lesson 1 in the YAML schema** — exact prompt text, branch specs, annotation copy + anchors, assertion, snapshots. Doubles as schema validation and the template for lessons 2–8.
 
 ## Changelog
+- **v1.1** (2026-07-11) — Added `Capture` step type + `{{userName}}` interpolation rule w/ XSS constraints, per [[Claude REPL Accounts & Progress Spec]].
 - **v1.0** (2026-07-09) — LOCKED. YAML→JSON confirmed; left rail with pipeline rationale; dev-basics woven as 2–3 TerminalDrills (L6 first-typed command, L8 git moment), full track post-launch.
 - **v0.1** (2026-07-09) — Initial spec: schema, Stage/Rail separation, PromptComposer, migration notes.
