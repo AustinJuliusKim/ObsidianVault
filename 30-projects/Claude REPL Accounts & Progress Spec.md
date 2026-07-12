@@ -5,7 +5,7 @@ tags: [project, claude-repl, accounts, payments, capture]
 type: project
 status: locked
 created: 2026-07-11
-updated: 2026-07-11
+updated: 2026-07-12
 related: [[Claude REPL]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Lesson Plan]]
 ---
 # Claude REPL — Accounts & Progress Spec (v1.1 · LOCKED)
@@ -73,6 +73,7 @@ events(owner_id, kind, payload jsonb, ts)                     # proof-gate instr
 - Privacy policy + data deletion before launch. Name interpolation stays in the client render layer except within the user's own saved page.
 
 ## Changelog
+- **Implemented** (2026-07-12) — Built on branch `feature/repl-accounts-progress` (PR pending). All v1 scope except BYOK panel + Stripe/wallet endpoints (Phase B; ledger schema ships). Documented deviations: backend runs as Lambda (`@fastify/aws-lambda`) behind a CloudFront `/api/*` behavior rather than a container (Dockerfile kept; portability disciplines intact); additive schema: `sessions` table (httpOnly-cookie sessions) and `progress.owner_type` anon|user discriminator; name-only capture stays client-side — the name rides along when the email lead posts.
 - **v1.1** (2026-07-11) — Portability disciplines locked (Supabase as plain Postgres; backend-mediated access; auth adapter; own PKs; RLS as defense-in-depth); AWS comparables (Aurora Sv2 scale-to-zero primary target, RDS micro, DSQL rejected for ledger); migration triggers + weekend-scale runbook.
 - **v1.0** (2026-07-11) — LOCKED. Supabase auth+Postgres (ledger-ACID tiebreaker); session-only BYOK; staged capture confirmed; engine-spec amendment executed.
 - **v0.1** (2026-07-11) — Initial spec: staged funnel, `{{userName}}` interpolation w/ XSS rules, passwordless auth, append-only ledger, proof-gate events.
