@@ -3,12 +3,12 @@ title: Claude REPL Business Plan
 aliases: [claude-repl-business]
 tags: [project, claude-repl, business, monetization, simulator]
 type: project
-status: evergreen
+status: locked
 created: 2026-07-01
-updated: 2026-07-01
+updated: 2026-07-11
 related: [[Claude REPL]], [[Projects MOC]], [[Model Routing Strategy]], [[Context Budgeting]]
 ---
-# Claude REPL — Business Plan (v1.1 · LOCKED)
+# Claude REPL — Business Plan (v1.3 · LOCKED)
 
 **One-liner:** A metered, browser-hosted agentic-coding platform whose free on-ramp is **Guided mode** — seeded, interactive Claude Code lessons replaying curated event streams at zero marginal cost. Guided lessons are free; *live execution* is metered; *advanced curriculum* is paid for everyone.
 
@@ -79,7 +79,23 @@ Structured-prompt exercises; every branch run live once during authoring, its no
 ## Unit economics
 - Guided: static CDN ≈ $0 marginal; seeding a few dollars per lesson per CC version.
 - Wallet: revenue = tokens × multiplier + track unlocks; gross margin ≈ (multiplier−1)/multiplier − E2B/Stripe/fraud.
-- Pull live Anthropic API pricing at implementation; keep pricing pass-through-relative.
+- Anthropic API pricing (researched 2026-07-11): Fable 5 $10/$50 · Opus 4.8 $5/$25 · Sonnet 4.6 $3/$15 · **Sonnet 5 intro $2/$10 through 2026-08-31 (then $3/$15)** · Haiku 4.5 $1/$5 per MTok. Batch API = 50% off (use for bench sweeps); prompt caching = 90% off cached input (cache the author role's fixed schema+exemplar block). Keep wallet pricing pass-through-relative.
+
+## Pre-PMF cost model & GTM posture (researched 2026-07-11)
+**Foundry/Model Lab costs (estimates, assumptions stated):**
+- Bench sweep: 5 golden briefs × 4 models; ~60k in / ~10k out per draft; seeding ≤3 branches × ~100–300k agent tokens on Sonnet; pairwise Sonnet judging → **~$50–70/sweep, ~$35–50 with batch+caching.** Trigger = model releases (~4–6×/yr) → **~$200–400/yr.**
+- Cadence: Haiku scouts ≈ $1/mo; auto-draft top-3 (Fable author + seed) → **~$10/mo monthly cadence, ~$45/mo weekly.** Cadence frequency is the budget dial.
+- Fixed: GH Actions free tier, static CDN, one small container (Fly/Railway $5–20), E2B cents (verify rates at build), Stripe per-transaction.
+- **Total pre-PMF burn ≈ $25–75/mo.** Conclusion: cost is not the constraint — founder time is. The PMF risk is A+B launch scope delaying learning, not burn.
+
+**GTM posture (pre-PMF, ~$0 acquisition — locked 2026-07-11):**
+- **Radar newsletter (approved):** "This week in agentic coding" — auto-drafted from scout summaries, human-edited, zero marginal cost → email list = launch audience + recurring top-of-funnel. First issue ships when the scout does.
+- **Foundry cadence: monthly default (~$10/mo), dial toward weekly post-launch.**
+- **SEO replays:** every published lesson doubles as a public guided-replay page ("watch Claude Code do X").
+- **Build-in-public** at low cadence (Choices playbook: TikTok/Reels, X, owned blog).
+- No paid acquisition pre-PMF; Teams stays frozen behind proof gates.
+
+**Monetization re-evaluation (Foundry-aware):** marginal cost of an advanced track ≈ $5–15 + review time → monetization cadence follows content cadence (new tracks sellable at PR merge). Credits-only v1 stands. **v2 subscription trigger (defined):** Foundry reliably ships ≥2 advanced lessons/month AND track-unlock attach rate clears threshold (set at launch) → launch all-access sub alongside the wallet; freshness justifies recurring billing.
 
 ## Risks
 - **Fixture drift** → CI re-seed pipeline (load-bearing). **Perceived fakery** → builder-locked input now; coupled-disclosure when freeform ships.
@@ -96,6 +112,8 @@ Structured-prompt exercises; every branch run live once during authoring, its no
 Business plan locked. Next: **Phase A/B technical architecture plan in Claude Code** (Opus for the architecture pass per [[Model Routing Strategy]]) — recorder/fixture format, player transport, lesson DAG schema, proxy design, wallet service. Feed this doc + [[Claude REPL]] as context.
 
 ## Changelog
+- **v1.3** (2026-07-11) — Locked: monthly Foundry cadence (dial up post-launch); radar newsletter approved as GTM channel; v2 subscription trigger confirmed as defined.
+- **v1.2** (2026-07-11) — Pre-PMF cost model w/ researched API pricing (bench ≈ $50–70/sweep; cadence $10–45/mo; total burn ≈ $25–75/mo); $0-acquisition GTM posture (radar newsletter, SEO replays, build-in-public); v2 subscription trigger defined; Sonnet 5 intro pricing noted.
 - **v1.1** (2026-07-02) — Guided spine amended to lesson-plan v1.1 (loop lesson inserted; sessions merged into L8) per approved amendment in [[Claude REPL Lesson Plan]].
 - **v1.0** (2026-07-01) — LOCKED. BYOK gated same as everyone for advanced tracks → single wallet, dual use (metered usage + fixed-price unlocks). Full 8-lesson guided spine at launch. Ambition: prove-first → proof gates defined, Teams frozen behind them. All open questions resolved.
 - **v0.4** — Guided mode badge + coupled-disclosure principle; builder-first UX; A+B launch scope.
