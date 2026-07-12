@@ -5,7 +5,7 @@ tags: [project, claude-repl, architecture, fixtures, guided-mode]
 type: project
 status: developing
 created: 2026-07-02
-updated: 2026-07-09
+updated: 2026-07-12
 related: [[Claude REPL]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Protocol]], [[Claude REPL Backend]], [[Claude REPL Frontend]]
 ---
 # Claude REPL — Technical Architecture (Phase A/B) (v1.0)
@@ -268,5 +268,6 @@ Shipped with Lessons 2–8 + the CLI-style UI. All additive — frozen enums/sha
 - Known accepted artifact: plan-mode fixtures surface `~/.claude/plans/plan.md` in the replayed tree.
 
 ## Changelog
+- **v1.2** (2026-07-12) — Accounts & Progress backend added ahead of Phase B: `services/guided-repl-api` (Fastify + pg, Supabase auth adapter, SQL migrations) per [[Claude REPL Accounts & Progress Spec]]; static stack gains a conditional CloudFront `/api/*` behavior (`ApiOriginDomain` param). §11 proxy/metering/wallet endpoints remain future — only the ledger schema exists.
 - **v1.1** (2026-07-03) — additive amendments above; 8-lesson spine live.
 - **v1.0** (2026-07-02) — initial architecture, drafted from approved plan.

@@ -5,7 +5,7 @@ tags: [project, claude-repl, lesson-engine, ux, schema]
 type: project
 status: locked
 created: 2026-07-09
-updated: 2026-07-11
+updated: 2026-07-12
 related: [[Claude REPL]], [[Claude REPL Lesson Plan]], [[Claude REPL Business Plan]], [[Claude REPL Protocol]]
 ---
 # Claude REPL — Lesson Engine Spec (v1.1 · LOCKED)
@@ -89,6 +89,7 @@ Replaces example-task buttons. Lives in the terminal pane; config-driven by the 
 Author **Lesson 1 in the YAML schema** — exact prompt text, branch specs, annotation copy + anchors, assertion, snapshots. Doubles as schema validation and the template for lessons 2–8.
 
 ## Changelog
+- **v1.1 implemented in code** (2026-07-12) — branch `feature/repl-accounts-progress` (PR pending): `capture_submitted`/`capture_skipped` engine actions (capture → `instructing` stage mode), mid-lesson assertion auto-advance (enables post-grade email capture), `railModel.latestAssertionResult`, render-time-only interpolation (raw token preserved in fixtures/reducer/assertions/matchPrompt; composer submits raw text + branchId).
 - **v1.1** (2026-07-11) — Added `Capture` step type + `{{userName}}` interpolation rule w/ XSS constraints, per [[Claude REPL Accounts & Progress Spec]].
 - **v1.0** (2026-07-09) — LOCKED. YAML→JSON confirmed; left rail with pipeline rationale; dev-basics woven as 2–3 TerminalDrills (L6 first-typed command, L8 git moment), full track post-launch.
 - **v0.1** (2026-07-09) — Initial spec: schema, Stage/Rail separation, PromptComposer, migration notes.
