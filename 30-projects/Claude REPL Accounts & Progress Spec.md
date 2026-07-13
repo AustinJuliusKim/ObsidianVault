@@ -5,7 +5,7 @@ tags: [project, claude-repl, accounts, payments, capture]
 type: project
 status: locked
 created: 2026-07-11
-updated: 2026-07-12
+updated: 2026-07-13
 related: [[Claude REPL]], [[Claude REPL Business Plan]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Lesson Plan]]
 ---
 # Claude REPL — Accounts & Progress Spec (v1.1 · LOCKED)
@@ -73,6 +73,7 @@ events(owner_id, kind, payload jsonb, ts)                     # proof-gate instr
 - Privacy policy + data deletion before launch. Name interpolation stays in the client render layer except within the user's own saved page.
 
 ## Changelog
+- **Auth-email fix** (2026-07-13) — First-time signup was landing users unauthenticated. Root cause: the email templates used Supabase's `{{ .ConfirmationURL }}`, which routes through Supabase's server-side `/auth/v1/verify` and redirects with the session in the URL **hash** — but the SPA has no Supabase JS SDK and its `AuthCallback` only reads `token_hash` from the query string (forwarding it to the Fastify `/auth/verify` adapter, which already accepts `type=signup`). Fix is template-only: links now point to `{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=(magiclink|signup)`. Added `services/guided-repl-api/email-templates/confirm-signup.html` (Confirm-signup template, styled like the magic-link one) and corrected `magic-link.html`; hardened `AuthCallback.jsx` to surface `?error=`/`#error=` instead of silently dropping to anon. Ops: paste both templates into Supabase Dashboard → Auth → Email Templates.
 - **Implemented** (2026-07-12) — Built on branch `feature/repl-accounts-progress` (PR #27, merged 2026-07-13). All v1 scope except BYOK panel + Stripe/wallet endpoints (Phase B; ledger schema ships). Documented deviations: backend runs as Lambda (`@fastify/aws-lambda`) behind a CloudFront `/api/*` behavior rather than a container (Dockerfile kept; portability disciplines intact); additive schema: `sessions` table (httpOnly-cookie sessions) and `progress.owner_type` anon|user discriminator; name-only capture stays client-side — the name rides along when the email lead posts.
 - **v1.1** (2026-07-11) — Portability disciplines locked (Supabase as plain Postgres; backend-mediated access; auth adapter; own PKs; RLS as defense-in-depth); AWS comparables (Aurora Sv2 scale-to-zero primary target, RDS micro, DSQL rejected for ledger); migration triggers + weekend-scale runbook.
 - **v1.0** (2026-07-11) — LOCKED. Supabase auth+Postgres (ledger-ACID tiebreaker); session-only BYOK; staged capture confirmed; engine-spec amendment executed.
