@@ -17,6 +17,9 @@ updated: 2026-07-15
 - [[Choices MOC]] — the Choices webapp + its growth, marketing, and architecture plans
 - [[Claude REPL MOC]] — the Claude REPL playground + its specs and components
 
+## Career
+- [[AI Engineering Job Search]] — positioning + application strategy for AI engineering roles (anchored on 3 Anthropic postings); deliverables in `apps/portfolio/` (portfolio site, résumé, LinkedIn copy)
+
 ## Vault meta
 - Up: [[Home MOC]]
 - [[Obsidian LLM Wiki]] — this vault's own master plan
