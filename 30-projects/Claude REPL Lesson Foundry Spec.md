@@ -5,7 +5,7 @@ tags: [project, claude-repl, foundry, agents, authoring-pipeline]
 type: project
 status: locked
 created: 2026-07-11
-updated: 2026-07-11
+updated: 2026-07-13
 related: [[Claude REPL]], [[Claude REPL Lesson Engine Spec]], [[Claude REPL Lesson Plan]], [[Claude REPL Business Plan]], [[Model Routing Strategy]]
 ---
 # Claude REPL — Lesson Foundry Spec (v1.3 · LOCKED)
@@ -80,6 +80,7 @@ Hard cap per cadence run; per-draft cost report. Runtime: **Claude Agent SDK** �
 **Author Lesson 1 in YAML** — now quadruple duty: template for lessons 2–8, schema validation, fixture-player build target, **and the Foundry's few-shot exemplar**.
 
 ## Changelog
+- **Implemented** (2026-07-13) — Built on branch `feature/repl-lesson-foundry` (PR pending): `services/guided-repl-foundry` (scout→overlap gate→author→lint→validate+seed→draft-PR bundles, `foundry bench` Model Lab, `foundry/{sources,models,settings}.yaml`), `.github/workflows/foundry.yml` (monthly cron == settings, draft PRs only, structural publish-guard test incl. uses-allowlist + REST-merge bans) + keyless CI job. Never-publish invariant hangs on branch protection + human merge (documented). 83 foundry tests keyless; 263 across the repo. Deviations in worktree NOTES.md (seeder file: dep, e2b lazy dep, run/dryrun beyond file list, anthropic-news URL unverified → manual op).
 - **v1.3** (2026-07-11) — Bench economics: Batch API + prompt caching for sweeps; Sonnet 5 added as linter/judge/author bench candidate; cost figures linked to business-plan model.
 - **v1.2** (2026-07-11) — Author default = Fable 5; bench runner deferred to build time; bench triggered by new model releases via the scout's own radar (model announcements added to registry).
 - **v1.1** (2026-07-11) — Configurable role-based model routing (`foundry/models.yaml`, per-run override, reserved `provider` field) + **Model Lab** bench harness: frozen golden sets, seed-pass % as objective author metric, judge hygiene rules, PR provenance telemetry as production benchmark.
