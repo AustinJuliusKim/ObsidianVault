@@ -50,7 +50,7 @@ Python; all backends are Node.
 | They want | Austin's evidence |
 |---|---|
 | Next.js/React at scale, architecture ownership | 9 yrs React; owned front-end infra at Ring (CDK) |
-| Design systems, interactive experiences | Portfolio design system; [confirm design-system work at Riot] |
+| Design systems, interactive experiences | Portfolio design system; **built Riot's Portal component library + cross-team contribution model** (AI-assisted via agents.md/style.md) |
 | AI-powered creative/dev tooling (MCP, Claude skills) | Guided REPL (Claude Code tooling); Claude-powered Choices |
 | Core Web Vitals / perf | Static site, perf-conscious build `[reinforce with Lighthouse score]` |
 | Headless CMS, localization | ⚠️ Gap — no direct CMS/localization; lean on the other strengths |
@@ -62,7 +62,7 @@ Python; all backends are Node.
 | React + TypeScript + modern backend | Core stack |
 | LLMs, agents, Claude API, MCP, observability | Claude Code agentic dev; Bedrock in Choices |
 | Built 0→1, startup-like autonomy | Choices + Guided REPL both 0→1 solo |
-| Component architectures, cross-team alignment | Ring micro-frontends; Riot tooling `[confirm cross-team]` |
+| Component architectures, cross-team alignment | Ring micro-frontends; Riot Portal contribution model across the org; led 3 FE contractors at Ring |
 
 ## Proof-point inventory
 
@@ -77,10 +77,15 @@ Python; all backends are Node.
 | Design Engineer, Web / Creative Studio | greenhouse.io/anthropic/jobs/5223916008 | Not applied | Lead with front-end craft + AI tooling; show Web Vitals |
 | Senior SWE, Full-stack | greenhouse.io/anthropic/jobs/5174743008 | Not applied | Lead with 0→1 + full-stack + Claude/agents |
 
-## Open items (blockers to finalizing copy)
+## Career facts (confirmed 2026-07-13, NDA-reviewed)
 
-- Real metrics/dates for Riot, Ring, Loot Crate (titles, users, scale, team sizes).
-- Education/credentials (or decide to omit).
+- **Riot** — SWE (2021–23) → Senior SWE (2023–present). Playtest platform/tooling; internal portal ~100 MAU → thousands DAU; Portal component library + AI-assisted contribution model; Thunderdome hackathon win (2025, Unreal skin-collections prototype). Player pools company-wide (~5k) to ~2M.
+- **Ring** — SDE (2018–21). Micro-frontend webview in iOS/Android; Neighbors B2B tooling (**genericized publicly — no law-enforcement framing**); led 3 FE contractors ~6mo; ML content-moderation tooling (60% metric kept private).
+- **Loot Crate** — Front-End SWE (2015–18). 40+ product-line launches; Rails/CoffeeScript → React/Redux; SportsCrate MVP (Rails/Docker/K8s); A/B testing.
+- **Education** — UCI, B.A. Economics, 2012.
+- **Code** — all in the `AustinJuliusKim/projects` monorepo (choices-webapp, guided-repl + packages/services).
+
+## Open items
+
 - Confirm `austinjuliuskim.com` apex cert + DNS for the portfolio deploy.
-- Exact GitHub repo URLs for the two projects.
 - Optional: publish a dev-blog post on building Guided REPL to pin in Featured.
