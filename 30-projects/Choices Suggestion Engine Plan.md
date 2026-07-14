@@ -5,13 +5,15 @@ tags: [choices, architecture, llm, search, planning]
 type: project
 status: draft
 created: 2026-07-06
-updated: 2026-07-09
+updated: 2026-07-14
 related: ["[[Choices Growth Plan]]", "[[Studio Design Constitution]]", "[[Choices Webapp]]"]
 ---
 # Choices Suggestion Engine Plan
 
 **Version:** v0.3 (2026-07-07) — Phases 0, 1, 3 implemented (branches `feature/suggest-phase0` → `feature/suggest-typeahead` → `feature/fill-my-4`, PRs pending merge + ops: AnonSalt param, Places key, Bedrock model access — see PR descriptions). **Update 2026-07-09:** Phase 3 Fill-my-4 is now **live on prod + preview** — Bedrock Haiku 4.5 access was granted and `BedrockModelId` set (PR #24); the "Bedrock model access" ops task is done. See [[Choices Webapp]] for the go-live details. Create-screen Fill-my-4 counts on USER# with sign-in required (no pairing exists there — documented deviation from "counter on the pairing"). Code status lives in [[Choices Webapp]]. locationBias promoted from deferred and built same day (PR #16, stacked on the Fill-my-4 PR): CloudFront viewer-geo headers via a custom /api* origin request policy — city-level, zero prompts, verified on preview.
 *v0.2 (2026-07-06) — gating, data policy, and typo-tolerance decisions locked*
+
+**Update 2026-07-14:** create-screen Fill-my-4 now skews to the signed-in user's own taste — `fillForUser` feeds `USER#.recentGames` (folded to HIST#-shaped entries by new `userHistoryEntries()` in `backend/history.mjs`) into the same prompt path the rematch flow uses. Closes the "create screen sends occasion only" gap ahead of Phases 2/4. The Fill-my-4 spec's "top nearby open restaurants (Places Nearby)" ingredient remains unbuilt, and a geo prompt hint was explicitly dropped: CloudFront viewer-geo headers were rejected in prod, so location requires the 📍 browser-geolocation consent surface, which Fill-my-4 doesn't have. Draft PR pending merge; details in [[Choices Webapp]].
 
 ## Decisions (locked 2026-07-06)
 - **Fill-my-4 gating: N free/month, unlimited on premium.** Default N=3 (enough to form the habit, scarce enough to sell the sub — tune against conversion data). Free uses reset monthly; counter on the pairing, not the device.
