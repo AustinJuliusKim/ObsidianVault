@@ -3,14 +3,16 @@ title: Choices CloudFront PAYG Migration Plan
 aliases: [choices-payg-migration, cloudfront-payg-plan]
 tags: [choices, aws, cloudfront, waf, infrastructure, planning]
 type: project
-status: seed
+status: developing
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-07-14
 related: ["[[Choices Growth Plan]]", "[[Choices Webapp]]", "[[Choices Suggestion Engine Plan]]"]
 ---
 # Choices CloudFront PAYG Migration Plan
 
-**Status: DEFERRED (2026-07-08) — growth isn't there yet.** This is the ready-to-execute playbook for migrating prod's CloudFront distribution off the flat-rate **Free** pricing plan to **pay-as-you-go**, unlocking everything the plan blocks. Revisit when a growth trigger fires (suggested: sustained MAU growth, WAF Count-mode metrics showing real abuse, or getState load where edge caching would matter).
+**Status: IN PROGRESS (2026-07-14) — phase 2 executed.** Owner switched the prod distribution to pay-as-you-go in the console; the downgrade **pends until the end of the current billing cycle**, so plan-gated resources still can't deploy to prod until it drops. Next in order: phase 1 (`ops/edge-waf.yaml` to us-east-1 — build/deploy now so the WebACL is ready), build + preview-verify phase 4 (`feature/payg-unlocks`), then on plan-drop: swap `WebAclArn` immediately (phase 3) and merge phase 4. New consumer of the unlocked headers: the Fill-my-4 city prompt hint ([[Choices Suggestion Engine Plan]] Increment A.2) — add `cloudfront-viewer-city`/`-country` to the phase-4 header whitelist alongside latitude/longitude.
+
+*(Superseded framing below, kept for history:)* **Status: DEFERRED (2026-07-08) — growth isn't there yet.** This is the ready-to-execute playbook for migrating prod's CloudFront distribution off the flat-rate **Free** pricing plan to **pay-as-you-go**, unlocking everything the plan blocks. Revisit when a growth trigger fires (suggested: sustained MAU growth, WAF Count-mode metrics showing real abuse, or getState load where edge caching would matter).
 
 ## Why (what the Free plan blocks)
 - **Custom origin request policy** → CloudFront IP-geolocation headers. Rejected outright on prod 2026-07-08 ("Distributions with the Free pricing plan can't have: Custom origin request policy") — that failure produced the browser-geolocation fallback (📍 pin as consent surface) now in place.
