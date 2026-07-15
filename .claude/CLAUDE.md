@@ -22,8 +22,8 @@ This repo is an **Obsidian-backed knowledge vault**, not an application. It is a
 title:
 aliases: []
 tags: []
-type: note | moc | project | reference | inbox
-status: seed | developing | evergreen
+type: note | moc | project | reference | index | inbox
+status: seed | draft | developing | locked | evergreen   # draft=in-progress · locked=frozen spec · evergreen=stable
 created:
 updated:
 related: []        # wikilinks to neighbors
@@ -34,12 +34,14 @@ source:            # reference notes only (optional)
 ## Linking rules
 - Use `[[wikilinks]]`, linked by **exact title**.
 - Every atomic note is linked from ≥ 1 MOC — **no orphans**.
-- `related:` frontmatter = lateral links. **Tags** = cross-cutting facets. **Folders/MOCs** = hierarchy.
+- `related:` frontmatter = lateral links. **Tags** = cross-cutting facets (controlled vocabulary in `10-maps/Tag Registry.md`). **Folders/MOCs** = hierarchy.
 
 ## Retrieval — READ THIS BEFORE LOADING VAULT CONTEXT
-The token-savings engine is the retrieval protocol. **Do not scan the whole vault.**
-- Enter at **`10-maps/Home MOC.md`** → follow links → load only the ≤ 5–7 atomic notes that match the task → stop.
-- If unsure, read MOC link lists + frontmatter only, then choose what to open.
+The token-savings engine is the retrieval protocol. **Do not scan the whole vault.** Escalate through tiers; stop as soon as you have what you need:
+- **Tier 1 (default):** enter at **`10-maps/Home MOC.md`** → follow links → load only the ≤ 5–7 atomic notes that match the task → stop. If unsure, read MOC link lists + frontmatter only, then choose.
+- **Tier 2 (fallback):** if the MOC walk misses, run a **scoped structural search** — one folder, matching filename/frontmatter/headings only (never full bodies) — then load just the hits.
+- **Tier 3 (last resort):** full-text body scan only when explicitly asked.
+- Large `30-projects/` docs: read the heading outline and load one section, not the whole file. Skip a doc's `## Decision log` unless the question is about provenance.
 - Full details and the write protocol live in the **`wiki` skill** (`.claude/skills/wiki/SKILL.md`) — invoke it for any vault read/write task.
 
 ## Standing context
