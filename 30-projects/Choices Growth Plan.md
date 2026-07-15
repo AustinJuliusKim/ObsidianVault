@@ -5,7 +5,7 @@ tags: [project, webapp, planning, growth, monetization]
 type: project
 status: draft
 created: 2026-07-01
-updated: 2026-07-09
+updated: 2026-07-15
 related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Choices Suggestion Engine Plan]], [[Choices CloudFront PAYG Migration Plan]], [[Projects MOC]]
 ---
 # Choices Growth Plan
@@ -429,6 +429,7 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 
 ## Open questions (v0.5)
 
+- **Premium gate set expanded 2026-07-15** (cost-driven): Fill-my-4 is now premium-only (0 free) and Google Places / Near-Me is premium-gated server-side — the two real per-use-cost levers now sit behind the sub, alongside streak display / full history / win-rates. ⚠️ The streak-visibility question below is *still unresolved* (the research says don't paywall seeing the streak); this session did not touch streak gating. Implementation in [[Choices Webapp]].
 - Name: which direction? (Pending Austin — see §9 shortlist.)
 - Sponsored slots eventually need light sales or self-serve tooling — appetite for that side of the business?
 - Streak *visibility* is premium-gated today, but 2026-07-05 market research (Duolingo, chess.com, Wordle) is unanimous: never paywall seeing the streak — it's the retention engine; monetize protection (freezes/repair) and derived insights instead. Revisit the premium gate split?
