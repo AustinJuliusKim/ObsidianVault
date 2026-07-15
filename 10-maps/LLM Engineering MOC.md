@@ -4,7 +4,7 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-06-25
-updated: 2026-07-12
+updated: 2026-07-15
 ---
 # LLM Engineering MOC
 > Purpose: entry point for everything about building with LLMs.
@@ -24,4 +24,6 @@ updated: 2026-07-12
 ## Planned (not yet written)
 - Prompt Structure Patterns — XML tags, few-shot, role framing
 - Eval Harness Basics — measuring prompt changes
-- MCP & Tooling MOC — sub-map for tooling
+
+## Vault meta
+- Up: [[Home MOC]]
