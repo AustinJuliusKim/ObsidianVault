@@ -1,7 +1,7 @@
 ---
 title: Claude REPL Protocol
 aliases: [claude-repl-protocol, claude-repl protocol]
-tags: [project, claude-code, protocol, websocket]
+tags: [project, claude-repl, protocol, websocket]
 type: note
 status: developing
 created: 2026-07-01

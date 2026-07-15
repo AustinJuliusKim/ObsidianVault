@@ -5,12 +5,12 @@ tags: [project, llm, meta]
 type: project
 status: developing
 created: 2026-06-25
-updated: 2026-07-01
+updated: 2026-07-15
 related: [[Home MOC]]
 ---
 # Obsidian-Backed LLM Wiki — Master Plan
 
-**Status:** v1.1 — Phases 0–2 + 4 built (structure, wiki skill, first domain seeded). MCP install pending (manual).
+**Status:** v1.2 — Phases 0–2 + 4 built; Phase 5 (scale & maintenance) underway — tiered retrieval, tag registry, sub-MOC split, linter enforcement. MCP install still pending (manual).
 **Surface:** Claude Code (CLI/IDE) · **Scope:** Mixed knowledge base · **Vault:** Greenfield (none yet)
 **Goal:** A curated Obsidian vault as a persistent, retrievable knowledge layer — optimized for *token savings*, *fast context*, and *supercharging future projects*.
 **Model routing:** Opus → architecture/planning · Sonnet → note writing & refactors · Haiku → capture, search, data gathering.
@@ -59,8 +59,8 @@ vault/
 title:
 aliases: []
 tags: []
-type: note | moc | project | reference | inbox
-status: seed | developing | evergreen
+type: note | moc | project | reference | index | inbox
+status: seed | draft | developing | locked | evergreen
 created:
 updated:
 related: []        # wikilinks to neighbors
@@ -187,8 +187,12 @@ related: []
 - Apply model routing: Haiku capture/search · Sonnet note-writing/refactor · Opus architecture.
 
 ### Phase 5 — Scale & maintenance
-- Link hygiene, orphan detection, dedup, periodic MOC review.
-- Git remote backup; multi-project reuse pattern.
+- **Tiered retrieval** (SKILL.md): MOC-walk → scoped structural search (one folder; filename/frontmatter/headings, not bodies) → full scan only if asked. A generated index stays **deferred** until ~150+ notes.
+- **MOC-split discipline**: split at > ~15 links / nested bullets / a ~6–7-link sub-group. Done: Projects MOC → Choices MOC + Claude REPL MOC.
+- **Controlled tags**: `10-maps/Tag Registry.md` (faceted vocabulary + alias map), enforced by the linter.
+- **Note-size + provenance**: soft linter budgets (~500w note / ~2,500w project); hot/cold split — current state up top, `## Decision log` cold; versions live in git, not inline.
+- **Automated hygiene**: `tools/vault-lint.mjs` (broken links, orphans, tag/status/collision/inbox/moc-backlink/note-size) — now portable (runs in Linux/web via `PROJECTS_REPO`), plus the weekly report.
+- Link hygiene, orphan detection, dedup, periodic MOC review; git remote backup; multi-project reuse pattern.
 
 ---
 
@@ -281,6 +285,14 @@ You ask *"how should I split work across models?"* → Claude opens **Home MOC**
 - **Filenames:** Title Case — locked.
 - **First MOC:** LLM Engineering — locked.
 
+### 2026-07-15 — Scaling: indexing, retrieval & housekeeping
+- **Retrieval model:** keep MOC-first; add a **scoped structural search** fallback tier (one folder, metadata/headings only) instead of a generated index. Generated `Vault Index` **deferred** to ~150+ notes / frequent Tier-2 misses / post-MCP graph search. *(Chosen over building the generated index now, and over an index + Obsidian Bases twin.)*
+- **Folder structure:** sound at scale — kept as-is. The strain was the MOC layer + doc size, not folder width.
+- **Decision/version provenance (hybrid):** routine decisions in an in-doc `## Decision log`; extract to an atomic note only when cross-cutting/reused. Prior spec versions live in git + `90-archive/`, not inline. Soft note-size budgets surface bloat.
+- **Status enum:** expanded to `seed | draft | developing | locked | evergreen` (draft/locked were already in use).
+- **Tags:** controlled vocabulary in `10-maps/Tag Registry.md`, linter-enforced. `claude-code` kept valid for tooling; only REPL project notes recanonicalized to `claude-repl`.
+- **MCP:** still the gate for backlink-safe bulk rename/delete; monster-doc extraction + reference/archive relocations deferred behind it.
+
 ---
 
 ## Build Log (2026-07-01)
@@ -289,6 +301,15 @@ Executed via Claude Code. Direct-file workflow confirmed end-to-end (Phase 3 bas
 - **Phase 1:** templates `50-templates/{Atomic Note, MOC, Project}.md`.
 - **Phase 2:** wiki skill — `.claude/CLAUDE.md` (conventions) + `.claude/skills/wiki/SKILL.md` (retrieval + write protocol).
 - **Phase 4:** seeded `10-maps/Home MOC.md`, `10-maps/LLM Engineering MOC.md`, `20-notes/Model Routing Strategy.md`, `20-notes/LLM Collaboration Rules.md`. Not-yet-written topics kept in "Planned" sections (no dangling links).
+
+## Build Log (2026-07-15)
+Phase 5 scaling pass (executed via Claude Code; see the 2026-07-15 Decision Log entry). All guardrail-safe — link-lists, tooling, protocol, tags, frontmatter; one filename-preserving move.
+- **Retrieval protocol:** `.claude/skills/wiki/SKILL.md` rewritten to tiered retrieval (MOC-walk → scoped search → full scan) + monster-doc section-loading, MOC-split discipline, tag-vocabulary, and decisions/versions blocks; `.claude/CLAUDE.md` mirrors the tiers, expands the status enum, adds the `index` type and the tag-registry pointer.
+- **Linter:** `tools/vault-lint.mjs` gained status-enum, tag-vocab (alias/unknown/collision), note-size, moc-backlink, and inbox-dependency checks, and became portable (`PROJECTS_REPO`; repo-claim self-skips when absent); `tools/vault-lint-weekly.sh` env-driven + OS-guarded.
+- **Structure:** split `Projects MOC` → `Choices MOC` + `Claude REPL MOC` (back-linked); added `10-maps/Tag Registry.md` (linked from Home MOC); added Home back-links to Projects + LLM Engineering MOCs; closed the `MCP & Tooling MOC` forward-ref.
+- **Housekeeping:** dropped the `evergreen` tag (status collision); reconciled `games→game`, `ai→llm`, and REPL `claude-code→claude-repl`; promoted `Choices Origin Story Source Pack` out of `00-inbox/` → `30-projects/` (type reference).
+- **Template:** `50-templates/Project.md` now starts hot/cold-split with a `## Decision log`.
+- **Deferred:** generated retrieval index; Obsidian MCP install; monster-doc → atomic-note extraction; reference/archive relocations.
 
 ## MCP Setup — Phase 3 (manual, do in Obsidian)
 Direct file access already works; MCP adds backlink-safe, link-aware edits. The plugin can only be installed from Obsidian's UI.
@@ -303,3 +324,4 @@ Direct file access already works; MCP adds backlink-safe, link-aware edits. The 
 - **Dedup:** merge overlapping atomic notes; keep one idea per note.
 - **MOC review:** keep MOCs lean (purpose line + grouped links); split into sub-MOCs when they grow.
 - **Backup:** push to the git remote (`origin`, personal creds already configured).
+- **Automation:** `tools/vault-lint.mjs` runs all of the above as checks (broken links, orphans, tag/status/collision, inbox-dependency, MOC back-links, note-size) — portable (Linux/web via `PROJECTS_REPO`), plus a weekly report via `tools/vault-lint-weekly.sh`. See `tools/README.md`.

@@ -1,7 +1,7 @@
 ---
 title: Choices Suggestion Engine Plan
 aliases: [suggestion-engine, choices-ai-plan]
-tags: [choices, architecture, ai, search, planning]
+tags: [choices, architecture, llm, search, planning]
 type: project
 status: draft
 created: 2026-07-06

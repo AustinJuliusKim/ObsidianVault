@@ -1,7 +1,7 @@
 ---
 title: Claude REPL
 aliases: [claude-repl]
-tags: [project, claude-code, e2b, websocket]
+tags: [project, claude-repl, e2b, websocket]
 type: project
 status: developing
 created: 2026-07-01
