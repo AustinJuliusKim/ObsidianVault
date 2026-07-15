@@ -1,7 +1,7 @@
 ---
 title: Claude REPL Frontend
 aliases: [claude-repl frontend, claude-repl app]
-tags: [project, claude-code, react, frontend]
+tags: [project, claude-repl, react, frontend]
 type: note
 status: developing
 created: 2026-07-01

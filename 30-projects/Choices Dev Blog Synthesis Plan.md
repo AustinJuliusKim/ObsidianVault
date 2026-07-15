@@ -1,7 +1,7 @@
 ---
 title: Choices Dev Blog Synthesis Plan
 aliases: [choices-blog-pipeline, dev-blog-synthesis]
-tags: [choices, marketing, content, ai, pipeline, planning]
+tags: [choices, marketing, content, llm, pipeline, planning]
 type: project
 status: draft
 created: 2026-07-08
