@@ -1,7 +1,7 @@
 ---
 title: Relational Games Studio Roadmap
 aliases: [studio-roadmap, relational-games]
-tags: [strategy, roadmap, studio, games, vision]
+tags: [strategy, roadmap, studio, game, vision]
 type: project
 status: draft
 created: 2026-07-05

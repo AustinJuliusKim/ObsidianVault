@@ -4,14 +4,19 @@
 # Run by launchd (com.aukim.vault-lint); safe to run manually.
 set -euo pipefail
 
-# launchd starts with a bare PATH; claude lives in ~/.local/bin, node under nvm
-export PATH="/Users/aukim/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
-if ! command -v node >/dev/null 2>&1; then
-  export PATH="$(ls -d "$HOME"/.nvm/versions/node/*/bin | sort -V | tail -1):$PATH"
+# launchd (macOS) starts with a bare PATH; claude lives in ~/.local/bin, node under nvm.
+# Guarded so the script also runs in a plain Linux/web shell where PATH is already set.
+if [[ "$(uname)" == "Darwin" ]]; then
+  export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+  if ! command -v node >/dev/null 2>&1; then
+    export PATH="$(ls -d "$HOME"/.nvm/versions/node/*/bin | sort -V | tail -1):$PATH"
+  fi
 fi
 
-VAULT=/Users/aukim/personal/ObsidianVault
-PROJECTS=/Users/aukim/personal/projects
+# Portable: derive the vault from this script's location (tools/ → vault root);
+# override with VAULT_DIR / PROJECTS_REPO env vars.
+VAULT="${VAULT_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
+PROJECTS="${PROJECTS_REPO:-/Users/aukim/personal/projects}"
 REPORT="00-inbox/Vault Lint Report.md"
 cd "$VAULT"
 

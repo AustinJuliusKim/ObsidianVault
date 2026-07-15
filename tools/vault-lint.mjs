@@ -11,12 +11,18 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const VAULT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PROJECTS = '/Users/aukim/personal/projects';
+const PROJECTS = process.env.PROJECTS_REPO || '/Users/aukim/personal/projects';
 const SKIP_DIRS = new Set(['.git', '.obsidian', '.claude', 'tools']);
 const HOME_MOC = '10-maps/Home MOC.md';
 const TEMPLATE_DIR = '50-templates';
-const ORPHAN_EXEMPT_DIRS = ['00-inbox', TEMPLATE_DIR, '90-archive'];
+const INBOX_DIR = '00-inbox';
+const ORPHAN_EXEMPT_DIRS = [INBOX_DIR, TEMPLATE_DIR, '90-archive'];
 const REPO_CLAIM_DIR = '30-projects';
+const TAG_REGISTRY = '10-maps/Tag Registry.md';
+// Convention advisories (checks 4–8): status enum + soft note-size budgets.
+const STATUS_ENUM = new Set(['seed', 'draft', 'developing', 'locked', 'evergreen']);
+const NOTE_WORD_LIMIT = 500;     // type: note soft budget (stay atomic)
+const PROJECT_WORD_LIMIT = 2500; // type: project soft budget (sweep history out)
 
 const WIKILINK_RE = /\[\[([^\]|#]+)(#[^\]|]*)?(\|[^\]]*)?\]\]/g;
 
@@ -193,7 +199,11 @@ function normalizeClaim(token) {
 
 const repoClaimCandidates = [];
 const seenClaims = new Set();
-for (const note of notes) {
+const projectsAvailable = fs.existsSync(PROJECTS);
+if (!projectsAvailable) {
+  warnings.push(`projects repo not found at ${PROJECTS} — repo-claim check skipped (set PROJECTS_REPO to enable)`);
+}
+for (const note of projectsAvailable ? notes : []) {
   if (!note.relPath.startsWith(REPO_CLAIM_DIR + path.sep)) continue;
   let inFence = false;
   for (let i = note.bodyStart; i < note.lines.length; i++) {
@@ -217,6 +227,97 @@ for (const note of notes) {
       }
     }
   }
+}
+
+// ---------- checks 4–8: convention advisories (warnings; non-blocking) ----------
+
+// Tag registry (10-maps/Tag Registry.md): parsed by section so prose backticks don't leak in.
+// Under a heading containing "canonical": every backticked token is an allowed tag.
+// Under a heading containing "deprecated"/"alias": a line `old` → `new` defines an alias.
+const allowedTags = new Set();
+const tagAliases = new Map();
+try {
+  const reg = fs.readFileSync(path.join(VAULT, TAG_REGISTRY), 'utf8');
+  let section = '';
+  for (const line of reg.split('\n')) {
+    const h = line.match(/^#{1,6}\s+(.*)$/);
+    if (h) { section = h[1].toLowerCase(); continue; }
+    if (/canonical/.test(section)) {
+      for (const m of line.matchAll(/`([^`]+)`/g)) allowedTags.add(m[1].toLowerCase());
+    } else if (/deprecated|alias/.test(section)) {
+      const a = line.match(/`([^`]+)`\s*(?:→|->)\s*`([^`]+)`/);
+      if (a) tagAliases.set(a[1].toLowerCase(), a[2]);
+    }
+  }
+} catch { /* registry absent → tag-vocabulary check disabled */ }
+
+const mocPaths = new Set(
+  notes.filter((n) => n.fm.type?.value === 'moc').map((n) => n.relPath),
+);
+const tagsOf = (note) =>
+  note.fm.tags ? flowList(note.fm.tags.value) ?? note.fm.tags.list ?? [] : [];
+const wordsOf = (note) => {
+  let n = 0;
+  for (let i = note.bodyStart; i < note.lines.length; i++) {
+    const t = note.lines[i].trim();
+    if (t) n += t.split(/\s+/).length;
+  }
+  return n;
+};
+
+for (const note of notes) {
+  if (note.relPath.startsWith(TEMPLATE_DIR + path.sep)) continue;
+  if (note.relPath === TAG_REGISTRY) continue;
+
+  // check 4: status enum
+  const status = note.fm.status?.value;
+  if (status && !STATUS_ENUM.has(status)) {
+    warnings.push(`[status] ${note.relPath}: "${status}" not in enum (${[...STATUS_ENUM].join('|')})`);
+  }
+
+  // check 5: tag vocabulary — deprecated alias / unknown / status collision
+  for (const tag of tagsOf(note)) {
+    const t = tag.toLowerCase();
+    if (tagAliases.has(t)) {
+      warnings.push(`[tag] ${note.relPath}: deprecated "${tag}" → use "${tagAliases.get(t)}"`);
+    } else if (allowedTags.size && !allowedTags.has(t)) {
+      warnings.push(`[tag] ${note.relPath}: "${tag}" not in Tag Registry`);
+    }
+    if (STATUS_ENUM.has(t)) {
+      warnings.push(`[tag] ${note.relPath}: tag "${tag}" collides with a status value`);
+    }
+  }
+
+  // check 6: note-size soft budget
+  const type = note.fm.type?.value;
+  if (type === 'note' || type === 'project') {
+    const words = wordsOf(note);
+    const limit = type === 'note' ? NOTE_WORD_LIMIT : PROJECT_WORD_LIMIT;
+    if (words > limit) {
+      const hint = type === 'note'
+        ? 'split into atomic notes'
+        : 'sweep history to ## Decision log / 90-archive';
+      warnings.push(`[note-size] ${note.relPath}: ${words} words > ${limit} (${type}) — ${hint}`);
+    }
+  }
+
+  // check 7: MOC parent back-link — a non-Home MOC must link up to another MOC
+  if (note.fm.type?.value === 'moc' && note.relPath !== HOME_MOC) {
+    const linksUp = [...(edges.get(note.relPath) ?? [])].some(
+      (t) => mocPaths.has(t) && t !== note.relPath,
+    );
+    if (!linksUp) warnings.push(`[moc-backlink] ${note.relPath}: no link up to a parent MOC`);
+  }
+}
+
+// check 8: inbox-dependency — an inbox note is a link target from a non-inbox note
+const inboxDepended = new Set();
+for (const [src, targets] of edges) {
+  if (src.startsWith(INBOX_DIR + path.sep)) continue;
+  for (const t of targets) if (t.startsWith(INBOX_DIR + path.sep)) inboxDepended.add(t);
+}
+for (const p of [...inboxDepended].sort()) {
+  warnings.push(`[inbox] ${p}: depended upon by a non-inbox note — promote out of ${INBOX_DIR}/`);
 }
 
 // ---------- output ----------

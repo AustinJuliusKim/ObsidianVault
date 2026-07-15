@@ -1,7 +1,7 @@
 ---
 title: Studio Design Constitution
 aliases: [design-constitution, game-rules]
-tags: [studio, design, principles, evergreen]
+tags: [studio, design, principles]
 type: reference
 status: evergreen
 created: 2026-07-05

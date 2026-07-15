@@ -19,3 +19,4 @@ updated: 2026-07-04
 
 ## Vault meta
 - Project & master plan: [[Obsidian LLM Wiki]]
+- Tag vocabulary: [[Tag Registry]]

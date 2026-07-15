@@ -1,7 +1,7 @@
 ---
 title: Claude REPL Backend
 aliases: [claude-repl-backend, claude-repl backend]
-tags: [project, claude-code, backend, e2b, websocket]
+tags: [project, claude-repl, backend, e2b, websocket]
 type: note
 status: developing
 created: 2026-07-01
