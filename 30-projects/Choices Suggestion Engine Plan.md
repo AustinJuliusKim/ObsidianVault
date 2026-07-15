@@ -5,7 +5,7 @@ tags: [choices, architecture, llm, search, planning]
 type: project
 status: draft
 created: 2026-07-06
-updated: 2026-07-14
+updated: 2026-07-15
 related: ["[[Choices Growth Plan]]", "[[Studio Design Constitution]]", "[[Choices Webapp]]"]
 ---
 # Choices Suggestion Engine Plan
@@ -15,8 +15,10 @@ related: ["[[Choices Growth Plan]]", "[[Studio Design Constitution]]", "[[Choice
 
 **Update 2026-07-14:** create-screen Fill-my-4 now skews to the signed-in user's own taste — `fillForUser` feeds `USER#.recentGames` (folded to HIST#-shaped entries by new `userHistoryEntries()` in `backend/history.mjs`) into the same prompt path the rematch flow uses. Closes the "create screen sends occasion only" gap ahead of Phases 2/4. The Fill-my-4 spec's "top nearby open restaurants (Places Nearby)" ingredient remains unbuilt, and a geo prompt hint was explicitly dropped: CloudFront viewer-geo headers were rejected in prod, so location requires the 📍 browser-geolocation consent surface, which Fill-my-4 doesn't have. Draft PR pending merge; details in [[Choices Webapp]]. **Same-day follow-up:** prod CloudFront moved to pay-as-you-go (see [[Choices CloudFront PAYG Migration Plan]], now in progress) — the dropped geo hint is unblocked as **Increment A.2**: once the payg-unlocks origin request policy lands (whitelist must add `cloudfront-viewer-city`/`-country`), pass city/country into `buildPrompt` as a request-scoped hint (never stored, never in events).
 
+**Update 2026-07-15:** Fill-my-4 is now **premium-only (0 free/month)** — `AI_FREE_USES` set to 0 (cost-driven: the LLM call has real per-use cost). The affordance still renders as a locked teaser. The "N free/month, default 3" gating decided below is **superseded**. Also this session: Places (L3) is now premium-gated server-side (guests/free get no billable Places call). Details + tests in [[Choices Webapp]].
+
 ## Decisions (locked 2026-07-06)
-- **Fill-my-4 gating: N free/month, unlimited on premium.** Default N=3 (enough to form the habit, scarce enough to sell the sub — tune against conversion data). Free uses reset monthly; counter on the pairing, not the device.
+- **Fill-my-4 gating: N free/month, unlimited on premium.** Default N=3 (enough to form the habit, scarce enough to sell the sub — tune against conversion data). Free uses reset monthly; counter on the pairing, not the device. **(Superseded 2026-07-15 → 0 free / premium-only; see [[Choices Webapp]].)**
 - **Phase 0 approved — logging starts now.** Anonymized global aggregation under the k-anonymity floor; per-pair history stays per-pair, deleted with the pairing. First item in the Sonnet queue.
 - **Typo tolerance in Phase 2**: edit-distance-1 matching on the client trie ships with the trie itself.
 
