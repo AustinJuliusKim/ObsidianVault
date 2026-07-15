@@ -1,8 +1,8 @@
 ---
 title: Choices Origin Story Source Pack
 aliases: [choices-origin-story, origin-source-pack]
-tags: [choices, marketing, content, story, inbox]
-type: inbox
+tags: [choices, marketing, content, story]
+type: reference
 status: seed
 created: 2026-07-08
 updated: 2026-07-08
