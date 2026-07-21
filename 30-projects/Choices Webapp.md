@@ -5,7 +5,7 @@ tags: [project, webapp, aws, serverless, game]
 type: project
 status: evergreen
 created: 2026-07-01
-updated: 2026-07-20
+updated: 2026-07-21
 related: [[Projects MOC]], [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]], [[Choices Data Architecture Plan]]
 ---
 # Choices Webapp
@@ -99,10 +99,10 @@ See **[[Choices Growth Plan]]** — the strategy, monetization, and sequencing d
 
 ### Carried-over engineering items (not covered in the growth plan)
 - Lightweight analytics: event counters for created / joined / completed / rematch (DynamoDB counters or Plausible/PostHog free tier).
-- GitHub Actions CI running the backend test suite; add integration tests for `handler.mjs` (currently only `game.mjs` is tested).
-- Fix doc drift: README and `docs/PLAN.md` still describe the old `/g/{id}` single-game model; code is pairing-based.
+- ~~GitHub Actions CI running the backend test suite; add integration tests for `handler.mjs`~~ — done (audit 2026-07-21: `backend-tests` job gates deploys; handler.test.mjs + 8 more suites exist). See [[Choices Harness Audit 2026-07-21]].
+- ~~Fix doc drift: README and `docs/PLAN.md`~~ — done (audit 2026-07-21: README describes pairing model; PLAN.md carries a historical banner).
 - Variable choice count 3–8 (remove the `EXACTLY_FOUR` constraint in `game.mjs`) — prerequisite for group mode and bracket premium mode.
-- Pairing history + running tally/streak ("A 3 – 2 B") — requires keeping completed-game summaries past the 30-day TTL.
+- ~~Pairing history + running tally/streak ("A 3 – 2 B")~~ — history shipped (HIST# items + accounts, 2026-07-05); **tally killed 2026-07-21 by Austin** — the game has no per-player winner (`stats.mjs` design note), a head-to-head score conflicts with Constitution rule 6.
 
 ## Links
 - Part of: [[Projects MOC]]
