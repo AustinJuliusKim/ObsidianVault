@@ -5,8 +5,8 @@ tags: [career, job-search, ai-engineering]
 type: project
 status: developing
 created: 2026-07-13
-updated: 2026-07-13
-related: ["[[Choices Webapp]]", "[[Claude REPL]]", "[[Projects MOC]]"]
+updated: 2026-07-21
+related: ["[[Choices Webapp]]", "[[Claude REPL]]", "[[Projects MOC]]", "[[AI Job Search Origin Session]]"]
 ---
 
 # AI Engineering Job Search
@@ -78,6 +78,8 @@ Python; all backends are Node.
 | Senior SWE, Full-stack | greenhouse.io/anthropic/jobs/5174743008 | Not applied | Lead with 0→1 + full-stack + Claude/agents |
 
 ## Career facts (confirmed 2026-07-13, NDA-reviewed)
+
+Verbatim source (original prompt + unredacted confirmations): [[AI Job Search Origin Session]].
 
 - **Riot** — SWE (2021–23) → Senior SWE (2023–present). Playtest platform/tooling; internal portal ~100 MAU → thousands DAU; Portal component library + AI-assisted contribution model; Thunderdome hackathon win (2025, Unreal skin-collections prototype). Player pools company-wide (~5k) to ~2M.
 - **Ring** — SDE (2018–21). Micro-frontend webview in iOS/Android; Neighbors B2B tooling (**genericized publicly — no law-enforcement framing**); led 3 FE contractors ~6mo; ML content-moderation tooling (60% metric kept private).
