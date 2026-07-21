@@ -21,16 +21,16 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 ## Schedule (dependency order)
 | # | Prompt | Model | Est | Gate |
 |---|---|---|---|---|
-| 0 | Repo/plan audit | Sonnet | 0.5d | none — run first |
-| 1 | Data lake Stage A (event envelope = one-way door) | Sonnet | 2–3d | Prompt 0 |
-| 2 | Scale-hardening close-out (canary, funnel dashboard, RUM, WAF/origin flips) | Sonnet | 1–2d | Prompt 0 (soak status confirmed) |
-| 3 | Engineering hygiene (CI tests, handler.mjs integration tests, doc drift) | Sonnet | 1d | none |
-| 4 | Variable choice count 3–8 | Sonnet | 0.5–1d | Prompt 3 (tests exist first) |
+| ✅ 0 | Repo/plan audit — done 2026-07-21 → [[Choices Harness Audit 2026-07-21]] | Sonnet | 0.5d | none — run first |
+| 1 | Data lake Stage A (event envelope = one-way door) ⚠ audit: streamConsumer/events/compaction tests already exist — diff plan-vs-code first | Sonnet | 2–3d | Prompt 0 |
+| 2 | Scale-hardening close-out (canary, funnel dashboard, RUM, WAF/origin flips) ⚠ audit: live ACL in Count, staged `ChoicesEdgeWaf` (Block) unattached; GameJoined/ShareReveal metrics not instrumented; needs H-1/H-2 answers | Sonnet | 1–2d | Prompt 0 (soak status confirmed) |
+| 3 | Engineering hygiene — **audit-DONE 2026-07-21** (backend-tests CI job gates deploys; handler.test.mjs + 8 more suites; docs disclaim old /g/{id} model) | Sonnet | 1d | none |
+| 4 | Variable choice count 3–8 (audit: EXACTLY_FOUR confirmed at game.mjs:24-25, CreatePairingView.jsx:14) | Sonnet | 0.5–1d | ready — gate satisfied by audit |
 | 5 | Group mode V3 — design + simulation, ship/kill report | Opus | 2–3d | Prompt 4 |
 | 6 | Group mode UI (only if Prompt 5 says ship) | Sonnet | 2–3d | Prompt 5 ship verdict + H playtest |
-| 7 | Suggestion engine Phase 2 — global trie | Sonnet | 2–3d | ~1k games logged (check via Prompt 1 lake / EMF) |
+| 7 | Suggestion engine Phase 2 — global trie | Sonnet | 2–3d | ~1k games logged — **~8 as of 2026-07-21**, gate far off |
 | 8 | Dev blog Post #1 draft (pipeline shakedown) | Sonnet | 0.5d | none — swap-point, run any time |
-| 9 | iOS Phase A finish — Capacitor build validation | Sonnet | 1–2d | Prompt 0 (branch state) |
+| 9 | iOS Phase A — **audit-DONE 2026-07-21** (Capacitor shell shipped via main, see STORE_READINESS.md; feature/ios-capacitor stale at 0 unique commits — delete after checking fix/lambda-cors-capacitor; on-device install check → row H) | Sonnet | 1–2d | Prompt 0 (branch state) |
 | 10 | Premium/partnership strategy pass | Opus | 1d | traction data (post-launch) |
 | H | Human tasks (no prompt) | User | — | see list |
 
@@ -125,6 +125,10 @@ Acceptance: Dated memo section exists in the Growth Plan with explicit recommend
 ```
 
 ## Row H — Human tasks (no prompt)
+- **H-1 (from audit): WAF cutover intent** — was unattached `ChoicesEdgeWaf` (Block) meant to replace the live Count-mode ACL `CreatedByCloudFront-8bb2952d`? Blocks Prompt 2's flip step.
+- **H-2 (from audit): admin-creds recheck** — ChoicesUser can't read cloudwatch/synthetics; confirm no canary/dashboard already exists (admin profile) before Prompt 2 builds duplicates.
+- **H-3 (from audit): kill or keep the head-to-head tally?** — `stats.mjs` design says the game has no per-player winner; the carried-over "A 3 – 2 B" item conflicts with it.
+- **H-4 (from audit): on-device iOS check** — personal-team install + full game on a real device (shell already ships via main).
 - **Apple Developer enrollment ($99) + App Store Connect setup** — gate for iOS Phase B only (GTM Plan Steps 0–1); deliberately deferred.
 - **Impact affiliate program applications** — approval lag is the long pole (Growth Plan §6).
 - **Group-mode playtest** — wife + one friend group; judged by laughter at the reveal (Constitution rule 10). Gates Prompt 6.
