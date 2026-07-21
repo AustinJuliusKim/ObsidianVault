@@ -28,7 +28,7 @@ updated: 2026-07-20
 4. **Activation**: TikTok territories — "The last cut" (reveal endings), "The ritual" (origin story), "Strategic cuts" (game-theory banter). Screenshot storyboard: mid-game cut → gold reveal → PLUM-42 invite → premium tease → origin line; test top captions vs none.
 
 ## Ship list
-1. **Decide** (household board): ~~winner gold vs green~~ ✅ **gold approved 2026-07-20** (green stays as in-app functional success only; shipped — see [[Choices Webapp]]); display name still open.
+1. **Decide** (household board): ~~winner gold vs green~~ **decided 2026-07-20: green wins** (gold was approved then reversed same day after seeing it in-app — winner/celebration accent stays `#22c55e`, now a semantic `--winner` token distinct from functional `--green`; Winner Gold `#FFC53D` is dropped from the shipped system — see [[Choices Webapp]]); display name still open.
 2. **Now**: reserve App Store name the moment Apple enrollment clears (first-come); enter subtitle+keywords same session. ~~Build share cut-card in webapp~~ ✅ **built 2026-07-20** (Wordle-style grid in `revealCard.js`, red strikes + gold trophy row + "nobody's fault" verdict (trophy chosen over crown, matches logo) — see [[Choices Webapp]]). Final Cut palette also applied in-app same session (indigo/slate/red/paper hex shifts).
 3. **Next**: Icon Composer rebuild (verify 6 Liquid Glass modes); apply Final Cut tokens to landing/blog/social templates.
 4. **Later**: screenshot A/B post-launch; trademark filing if revenue justifies; fill origin-story gap interview before launch video #1.
