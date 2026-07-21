@@ -4,13 +4,14 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-07-15
-updated: 2026-07-16
+updated: 2026-07-21
 ---
 # Choices MOC
 > Purpose: entry point for the Choices webapp — a serverless 2-player elimination game — and its plan docs.
 
 ## Core
 - [[Choices Webapp]] — serverless 2-player elimination game (React + AWS Lambda + DynamoDB + Web Push)
+- [[Choices Webapp Execution Harness]] — dependency-ordered schedule of self-contained Claude Code prompts distilled from the plans below (run via /harness)
 
 ## Plans & specs
 - [[Choices Growth Plan]] — growth + monetization strategy (target $5k/mo, food-focused, affiliate → premium → partnerships)
