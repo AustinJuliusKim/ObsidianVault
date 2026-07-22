@@ -49,6 +49,7 @@ The token-savings engine is the retrieval protocol. **Do not scan the whole vaul
 
 ## Guardrails
 - Until the Obsidian MCP is active, **do not bulk-rename or delete linked notes** — wikilink backlinks break silently. Safe zones for automation: `00-inbox/`, raw dumps, new drafts.
+- Any change to a harness-pipeline component (`.github/workflows/harness-intake.yml`, `.github/ISSUE_TEMPLATE/harness.md`, `.claude/skills/harness/`, the `harness-intake` routine, or `20-notes/Harness Automation Pipeline.md`) **must update the mermaid data-flow diagram in the root `README.md`** in the same change.
 
 ## Model routing
 Haiku → capture / search / data gathering · Sonnet → note writing / refactors · Opus → architecture / planning.

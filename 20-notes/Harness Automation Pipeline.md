@@ -5,7 +5,7 @@ tags: [claude-code, skills, workflow, orchestration]
 type: note
 status: evergreen
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 related: [[Prompt Harness Skill]], [[Model Routing Strategy]]
 ---
 # Harness Automation Pipeline
@@ -14,13 +14,15 @@ Chat-triggered automation that turns a claude.ai planning chat into vault docs +
 
 ## Flow
 
+Canonical mermaid diagram: repo root `README.md` — keep it in sync with any pipeline change (rule in `.claude/CLAUDE.md`).
+
 ```
 claude.ai chat (GitHub connector enabled)
   → chat files an issue on AustinJuliusKim/ObsidianVault
       title "Harness: <Project>", label `harness`, body per the issue template
-  → .github/workflows/harness-intake.yml fires on the issue event
+  → .github/workflows/harness-intake.yml fires when the `harness` label lands
       POSTs to the routine's fire endpoint (repo secrets); if secrets unset, no-op
-  → routine `harness-intake` (trig_012Z62wCfRW5Sdm1wxpgCB6s, daily sweep 8:13am PT)
+  → routine `harness-intake` (trig_012Z62wCfRW5Sdm1wxpgCB6s, daily sweep 7:30am PT)
       cloud session on the vault repo: saves the plan per the wiki skill,
       runs the harness skill (Generate ONLY), opens a `claude/` PR,
       comments the PR link on the issue, labels it `harness-processed`
