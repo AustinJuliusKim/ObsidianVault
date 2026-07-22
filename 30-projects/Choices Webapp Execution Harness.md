@@ -25,7 +25,7 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 | 1 | Data lake Stage A (event envelope = one-way door) ⚠ audit: streamConsumer/events/compaction tests already exist — diff plan-vs-code first | Sonnet | 2–3d | Prompt 0 |
 | 2 | Scale-hardening close-out (canary, funnel dashboard, RUM, WAF/origin flips) ⚠ audit: GameJoined/ShareReveal metrics not instrumented; H-1 answered — `ChoicesEdgeWaf` swap confirmed but **deferred past 2026-07-31 billing period**; H-2 still open | Sonnet | 1–2d | WAF/origin steps: after 2026-07-31 + H-2; other steps: ready |
 | 3 | Engineering hygiene — **audit-DONE 2026-07-21** (backend-tests CI job gates deploys; handler.test.mjs + 8 more suites; docs disclaim old /g/{id} model) | Sonnet | 1d | none |
-| 4 | Variable choice count 3–8 (audit: EXACTLY_FOUR confirmed at game.mjs:24-25, CreatePairingView.jsx:14) | Sonnet | 0.5–1d | ready — gate satisfied by audit |
+| ✅ 4 | Variable choice count 3–8 — done 2026-07-22, PR projects#53 (draft): EXACTLY_FOUR→BAD_COUNT 3–8; turnAfter generalized (starter never cuts last — classic order preserved at 4); cut_made/game_finished schema_v 2 bounds widened; create+rematch add/remove rows; 168/168 tests. Preview-stack 3- & 8-choice game acceptance reported on the PR | Sonnet | 0.5–1d | ready — gate satisfied by audit |
 | 5 | Group mode V3 — design + simulation, ship/kill report | Opus | 2–3d | Prompt 4 |
 | 6 | Group mode UI (only if Prompt 5 says ship) | Sonnet | 2–3d | Prompt 5 ship verdict + H playtest |
 | 7 | Suggestion engine Phase 2 — global trie | Sonnet | 2–3d | ~1k games logged — **~8 as of 2026-07-21**, gate far off |
