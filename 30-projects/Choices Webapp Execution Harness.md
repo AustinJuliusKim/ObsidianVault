@@ -23,7 +23,7 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 |---|---|---|---|---|
 | ✅ 0 | Repo/plan audit — done 2026-07-21 → [[Choices Harness Audit 2026-07-21]] | Sonnet | 0.5d | none — run first |
 | ✅ 1 | Data lake Stage A — **verified done 2026-07-22**: live since 2026-07-12 (PR #28, plan-doc banner the harness generation missed); full plan-vs-code diff found every spec element wired (envelope/streams/consumer/zones/salt/tombstones/compaction/Glue/Athena); 164/164 backend tests; prod stack outputs expose EventLake/Glue/Athena. Live-data spot check blocked by ChoicesUser perms → H-5 | Sonnet | 2–3d | Prompt 0 |
-| 2 | Scale-hardening close-out (canary, funnel dashboard, RUM, WAF/origin flips) ⚠ audit: GameJoined/ShareReveal metrics not instrumented; H-1 answered — `ChoicesEdgeWaf` swap confirmed but **deferred past 2026-07-31 billing period**; H-2 still open | Sonnet | 1–2d | WAF/origin steps: after 2026-07-31 + H-2; other steps: ready |
+| ◐ 2 | Scale-hardening close-out — **code-complete 2026-07-22, PR projects#54 (draft)**: GameJoined/ShareReveal funnel metrics + dashboard widgets, Synthetics canary stack (`ops/canary.yaml`, analytics-excluded via CanarySecret), CloudWatch RUM stack + dormant client (`ops/rum.yaml`). Remaining: admin deploys + verifications (PR #54 Ops tasks → H-6) and the WAF/origin flips **deferred past 2026-07-31** (H-1) + H-2 | Sonnet | 1–2d | WAF/origin steps: after 2026-07-31 + H-2; other steps: ready |
 | 3 | Engineering hygiene — **audit-DONE 2026-07-21** (backend-tests CI job gates deploys; handler.test.mjs + 8 more suites; docs disclaim old /g/{id} model) | Sonnet | 1d | none |
 | 4 | Variable choice count 3–8 (audit: EXACTLY_FOUR confirmed at game.mjs:24-25, CreatePairingView.jsx:14) | Sonnet | 0.5–1d | ready — gate satisfied by audit |
 | 5 | Group mode V3 — design + simulation, ship/kill report | Opus | 2–3d | Prompt 4 |
@@ -137,6 +137,7 @@ Acceptance: Dated memo section exists in the Growth Plan with explicit recommend
 - **Decide: streak-visibility premium gate** — research says never paywall it (Growth Plan §Open questions); Prompt 10 will bring data.
 - **Decide: appetite for sponsored-slots sales tooling** (Growth Plan §Open questions).
 - **H-5 (from row-1 verification 2026-07-22): lake spot check** — ChoicesUser lacks s3/athena/cloudwatch read on the event lake and the admin profile session was expired; with admin creds, `aws s3 ls` both zones + one Athena `GROUP BY type` in `ChoicesWebApp-events` to confirm post-07-12 data keeps flowing. Fold into the H-2 admin recheck session.
+- **H-6 (from row 2, 2026-07-22): hardening ops deploys** — run PR projects#54's Ops tasks in order: H-2 duplicate check → CanarySecret on the app stack → `ChoicesCanary` stack (+SNS confirm, canary green) → `ChoicesOpsDashboard` redeploy (funnel widgets render) → `ChoicesRum` stack + `VITE_RUM_*` repo variables + frontend redeploy (forced error appears in RUM). Acceptance for row 2 completes here.
 
 ## Standing rules for every session
 1. [[Studio Design Constitution]] governs: rubric, ethic (no scorekeeping between partners, privacy as posture), kill tests. If a prompt's task fails a kill test, stop and report — don't build it.
