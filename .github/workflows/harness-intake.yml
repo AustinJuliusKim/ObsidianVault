@@ -1,15 +1,17 @@
 name: harness-intake
 
 # Fires the claude.ai "harness-intake" routine (trig_012Z62wCfRW5Sdm1wxpgCB6s)
-# when an issue carries the `harness` label. If the fire secrets aren't set,
-# the routine's daily 8:13am PT sweep picks the issue up instead.
+# when the `harness` label lands on an issue. If the fire secrets aren't set,
+# the routine's daily sweep picks the issue up instead.
+# `labeled` only (not `opened`): issues created with the label emit both
+# events, which double-fired the routine.
 on:
   issues:
-    types: [opened, labeled]
+    types: [labeled]
 
 jobs:
   fire-routine:
-    if: contains(github.event.issue.labels.*.name, 'harness')
+    if: github.event.label.name == 'harness'
     runs-on: ubuntu-latest
     steps:
       - name: Fire harness-intake routine
@@ -24,5 +26,6 @@ jobs:
           fi
           curl -sS --fail-with-body -X POST "$FIRE_URL" \
             -H "Authorization: Bearer $FIRE_TOKEN" \
+            -H "anthropic-version: 2023-06-01" \
             -H "Content-Type: application/json" \
             -d '{}'
