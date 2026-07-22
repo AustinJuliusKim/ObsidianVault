@@ -4,7 +4,7 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-07-01
-updated: 2026-07-15
+updated: 2026-07-22
 ---
 # Projects MOC
 > Purpose: entry point for personal projects in the `personal/projects` monorepo.
@@ -23,3 +23,5 @@ updated: 2026-07-15
 ## Vault meta
 - Up: [[Home MOC]]
 - [[Obsidian LLM Wiki]] — this vault's own master plan
+- [[Pipeline Smoke Test]] — end-to-end smoke test of the harness-intake pipeline itself; toy deliverable only
+  - [[Pipeline Smoke Test Execution Harness]] — its 2-prompt harness
