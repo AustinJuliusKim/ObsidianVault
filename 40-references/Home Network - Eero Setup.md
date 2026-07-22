@@ -110,6 +110,47 @@ or-break question:
 - `ping -c 30 192.168.4.1` → **1–3 ms** avg (vs 8 ms wireless). Cleanest tell.
 - `networkQuality -v` (loaded) → loaded latency well under 100 ms (was 1709 ms).
 
+### Attempt 1 status (2026-07-21) — NOT working yet
+
+- Coax colors: **office = black, runs up to roof**; **living room + bedroom =
+  brown, split from a splitter coming down from the roof.** Different runs; if they
+  join, it's up at the roof.
+- Initial "solid LED" was a **misread** — that was the **Power LED**, not the
+  **Coax/MoCA LED**. The Coax LED on MoCA-B looked dim/off. So a real MoCA link
+  was **never confirmed**. Ethernet reseated + both coax connectors hand-tightened;
+  still no wired backhaul (gateway ping steady ~9 ms = wireless).
+- eero briefly showed "Wired" then reverted to wireless → link came up marginal
+  and dropped. Consistent with **old/low-rated or corroded roof splitters** and/or
+  black↔brown not actually joined.
+- **Prime suspect: the roof splitters** (to inspect in daylight). Meanwhile the
+  wireless setup (~218 Mbps, stable) is the working state — nothing is broken.
+
+### Roof checklist (next daylight trip)
+
+1. **Continuity:** do the black (office) and brown (LR/BR) lines actually meet at
+   the roof, or terminate separately (e.g. dead antenna/dish)? MoCA needs them on
+   one continuous path.
+2. **Splitter rating:** read the printing. Must pass **5–1675 MHz** (or higher).
+   `5–1000` / `5–900 MHz` **blocks MoCA** — replace.
+3. **Splitter condition:** corrosion, water intrusion, rust, cracked housing →
+   replace even if the rating is fine.
+4. **Amplifiers:** any inline amp **blocks MoCA** unless MoCA-rated + bidirectional
+   → remove/bypass.
+5. **Open ports:** cap every unused leg (incl. bedroom jack if unused) with a
+   **75 Ω terminator** — open ends reflect MoCA signal and kill SNR.
+6. **Bring:** MoCA-rated (5–1675) splitter, F-81 barrel connectors, 75 Ω
+   terminators, PoE filter, weatherproofing (dielectric grease / boots), wrench.
+7. **Goal:** office + living room on ONE continuous path, MoCA-rated splitters
+   only, no open ends → then MoCA-B Coax LED should hold **solid green**,
+   power-cycle the shoecase eero, and it takes wired.
+
+### Reading the ScreenBeam LEDs (don't repeat the misread)
+
+Three LEDs, read the label: **Power** (always green when plugged in — ignore),
+**Coax** (the one that matters — green = MoCA link, off = none), **Ethernet**
+(green = cable connected). A real link needs the **Coax** LED green on **both**
+adapters.
+
 ### Fallback if office jack is on a separate coax run
 
 Find a shared upstream splitter; or re-terminate the office drop into the outside
