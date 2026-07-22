@@ -5,7 +5,7 @@ tags: [choices, claude-code, workflow]
 type: project
 status: active
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 related: ["[[Choices Growth Plan]]", "[[Choices Suggestion Engine Plan]]", "[[Choices Data Architecture Plan]]", "[[Choices iOS GTM Plan]]", "[[Choices Marketing Proposal]]", "[[Choices Dev Blog Synthesis Plan]]", "[[Choices Webapp]]", "[[Studio Design Constitution]]"]
 ---
 # Choices Webapp Execution Harness
@@ -22,7 +22,7 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 | # | Prompt | Model | Est | Gate |
 |---|---|---|---|---|
 | ✅ 0 | Repo/plan audit — done 2026-07-21 → [[Choices Harness Audit 2026-07-21]] | Sonnet | 0.5d | none — run first |
-| 1 | Data lake Stage A (event envelope = one-way door) ⚠ audit: streamConsumer/events/compaction tests already exist — diff plan-vs-code first | Sonnet | 2–3d | Prompt 0 |
+| ✅ 1 | Data lake Stage A — **verified done 2026-07-22**: live since 2026-07-12 (PR #28, plan-doc banner the harness generation missed); full plan-vs-code diff found every spec element wired (envelope/streams/consumer/zones/salt/tombstones/compaction/Glue/Athena); 164/164 backend tests; prod stack outputs expose EventLake/Glue/Athena. Live-data spot check blocked by ChoicesUser perms → H-5 | Sonnet | 2–3d | Prompt 0 |
 | 2 | Scale-hardening close-out (canary, funnel dashboard, RUM, WAF/origin flips) ⚠ audit: GameJoined/ShareReveal metrics not instrumented; H-1 answered — `ChoicesEdgeWaf` swap confirmed but **deferred past 2026-07-31 billing period**; H-2 still open | Sonnet | 1–2d | WAF/origin steps: after 2026-07-31 + H-2; other steps: ready |
 | 3 | Engineering hygiene — **audit-DONE 2026-07-21** (backend-tests CI job gates deploys; handler.test.mjs + 8 more suites; docs disclaim old /g/{id} model) | Sonnet | 1d | none |
 | 4 | Variable choice count 3–8 (audit: EXACTLY_FOUR confirmed at game.mjs:24-25, CreatePairingView.jsx:14) | Sonnet | 0.5–1d | ready — gate satisfied by audit |
@@ -136,6 +136,7 @@ Acceptance: Dated memo section exists in the Growth Plan with explicit recommend
 - **Edit + publish blog Post #1** — pipeline stage 3.
 - **Decide: streak-visibility premium gate** — research says never paywall it (Growth Plan §Open questions); Prompt 10 will bring data.
 - **Decide: appetite for sponsored-slots sales tooling** (Growth Plan §Open questions).
+- **H-5 (from row-1 verification 2026-07-22): lake spot check** — ChoicesUser lacks s3/athena/cloudwatch read on the event lake and the admin profile session was expired; with admin creds, `aws s3 ls` both zones + one Athena `GROUP BY type` in `ChoicesWebApp-events` to confirm post-07-12 data keeps flowing. Fold into the H-2 admin recheck session.
 
 ## Standing rules for every session
 1. [[Studio Design Constitution]] governs: rubric, ethic (no scorekeeping between partners, privacy as posture), kill tests. If a prompt's task fails a kill test, stop and report — don't build it.
