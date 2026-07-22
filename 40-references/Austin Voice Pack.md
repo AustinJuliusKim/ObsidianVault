@@ -43,11 +43,15 @@ Seeded 2026-07-22 from three LinkedIn posts Austin supplied (captured via web fe
 ### Sample 3 — LinkedIn post, AWS billing LSE (Jul 2026)
 > How about that AWS Billing LSE this morning? Anyone else get a heart attack? I know I didn't get a $2.5bn alert, but even just a $1.6k alert woke me up like Vietnamese coffee injected intravenously. I had just fed my 4mos baby a bottle and just happened to open my emails... Luckily I spotted in my billing center that AWS was having a large scale event... Suffice to say, I am questioning my choice in Cloud Providers and tech stack for hobby purposes.
 
+### Sample 4 — LinkedIn post, mentee signal-boost (~2024; earnest community mode — no memes, same generosity)
+> Hey Recruiters, Hiring Managers, and Fellow Bootcamp Grads! I think we can all agree that the tech landscape has changed, but there still has to be opportunities to introduce junior and associate level software engineers for the future of our profession. I have the extreme privilege to mentor Kwan (James) Ko, at a time that is more reliant on the power of networking than ever. What are some tips and job hunting ideas you have to help future industry professionals land their first opportunity? If you also don't mind sharing this with your network and passing on some goodwill! Also linking James post and profile here for some more impressions.
+
 ## Traits — measured against the samples above (2026-07-22)
 - Long, loosely-chained sentences that ride momentum; the occasional fragment or run-on left standing. Do NOT tidy his rhythm into short declaratives.
 - Vivid, slightly absurd similes as the main humor engine ("like Vietnamese coffee injected intravenously", "we don't need a Ferrari to drive to the grocery store", "pair like a fine wine and cheese").
 - Meme/community register dropped in deadpan ("I'm tired of this grandpa", "burning them tokens", "hehe") — once or twice per post, never wall-to-wall.
-- His real life appears as casual parentheticals, not framing: the 4-month-old, paternity leave, the garage refactor, the MTG collection.
+- His real life appears as casual parentheticals, not framing: the 4-month-old, paternity leave, the garage refactor, the MTG collection. **Content rule (Austin, 2026-07-22): the baby stays gender-neutral in anything published** — "the baby", "my 4-month-old", never he/she.
+- Two registers, both his: the meme-inflected builder mode (samples 1–3) and an earnest community mode (sample 4 — sincere, exclamation-open, zero irony). Posts pick one; the generosity and direct address are constant across both.
 - Numbers and dates stated mid-sentence like gossip, unflattering ones included ($1.6k alert, July 7th→12th→19th, 85%).
 - Direct address + genuine generosity at the close ("feel free to take this", "hopefully you're able to save on your tokens just like I did!"). Exclamation marks are used, sincerely, sparingly.
 - Mild theatrical exasperation as a stance ("Anyone else get a heart attack?", "Suffice to say, I am questioning my choice…") — annoyed but never bitter.

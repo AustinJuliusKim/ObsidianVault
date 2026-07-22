@@ -25,7 +25,7 @@ When I finally wrote it down as code, the balance turned out to be load-bearing 
 
 ## Building it (between bottle feeds)
 
-I built Choices solo, mostly in the margins around a 4-month-old — plan docs on my phone while she's asleep on me, Claude Code burning through the implementation when I'm back at a keyboard. v1 went live at choices.austinjuliuskim.com in June 2026. My wife was the first user, and honestly she's still the QA department: "wife-approval of the native feel" is the literal, written-down acceptance gate for the iOS build. [PENDING #3: the first real dinner the app decided — what won, what she said.] [PENDING #4: her v1 reaction beyond the story below.]
+I built Choices solo, mostly in the margins around a 4-month-old — plan docs on my phone while the baby's asleep on me, Claude Code burning through the implementation when I'm back at a keyboard. v1 went live at choices.austinjuliuskim.com in June 2026. My wife was the first user, and honestly she's still the QA department: "wife-approval of the native feel" is the literal, written-down acceptance gate for the iOS build. [PENDING #3: the first real dinner the app decided — what won, what she said.] [PENDING #4: her v1 reaction beyond the story below.]
 
 Some honest numbers, because I want every post here to carry at least one: the July push is 82 commits and counting, sitting on 169 backend tests, running on infrastructure that costs me $0/month thanks to a CloudFront flat-rate plan (that story deserves its own post, it's a good one). And the event lake I stood up logged 8 real games in its first 11 days. Eight! Which is not a typo, and is exactly why my current boss fight is distribution, not features.
 
