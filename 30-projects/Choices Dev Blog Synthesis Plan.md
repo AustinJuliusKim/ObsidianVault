@@ -5,7 +5,7 @@ tags: [choices, marketing, content, llm, pipeline, planning]
 type: project
 status: draft
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-07-22
 related: ["[[Choices Marketing Proposal]]", "[[Choices Growth Plan]]", "[[Choices Suggestion Engine Plan]]", "[[Relational Games Studio Roadmap]]"]
 ---
 # Choices Dev Blog Synthesis Plan
@@ -52,6 +52,7 @@ Same loop as the proposal: subscribers + builder DMs; per-post UTM to the game. 
 
 ## Shakedown log
 - **Run 1 (2026-07-08): "Game-first onboarding"** (Duolingo/Wordle pattern, Choices receipts) — drafted **in-session** (no `ant`/API key on the machine; per the first-posts allowance). Source pack + draft-v1 + thread at `00-inbox/blog-drafts/game-first-onboarding/`. Pipeline notes: PR bodies weren't needed for this one (product post — code-verified flow walk replaced them); the "one honest number" rule produced the strongest lines (2 taps, 0 signups, the `ghost` CSS class); Wordle web-verification added the closer (built for his partner). Template addition for next run: require a "delete test" style takeaway the reader can apply to their own product. This post joins the slate (7 banked).
+- **Run 2 (2026-07-22): Post #1 "I built an app for my marriage"** (slug `app-for-my-marriage`) — drafted **in-session** via harness row 8. Source pack + draft-v1 + thread at `00-inbox/blog-drafts/app-for-my-marriage/`. Pipeline notes: the Origin Story Source Pack's gap interview is still unfilled, so the draft carries six inline `[PENDING #n]` slots instead of invented detail (the pack's "do not invent" rule held; gap #5 — her enthusiasm — gates publishing on top of the App Store milestone). The canonical-beats table drafted cleanly; the "delete test" template rule produced the post's takeaway (design the *blame* out). Voice-pack note for next run: harness prompt said constitution voice, this plan overrides to builder voice for blog — codify the override in the prompt template so future runs don't have to resolve it. 8 banked.
 
 ## Next actions
 - [x] First draft run — done 2026-07-08 ("Game-first onboarding", see Shakedown log); refine the voice pack from Austin's edits. CloudFront story remains next in the queue.
