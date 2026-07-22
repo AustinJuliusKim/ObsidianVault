@@ -5,7 +5,7 @@ tags: [choices, claude-code, workflow]
 type: project
 status: active
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 related: ["[[Choices Growth Plan]]", "[[Choices Suggestion Engine Plan]]", "[[Choices Data Architecture Plan]]", "[[Choices iOS GTM Plan]]", "[[Choices Marketing Proposal]]", "[[Choices Dev Blog Synthesis Plan]]", "[[Choices Webapp]]", "[[Studio Design Constitution]]"]
 ---
 # Choices Webapp Execution Harness
