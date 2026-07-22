@@ -21,6 +21,7 @@ updated: 2026-07-21
 - [[Wake-on-Reset Skill]] — checkpoint near the usage limit, arm a one-shot cron, resume orchestration autonomously at window reset (portable copy of the ~/.claude skill)
 - [[Vault-Sync Skill]] — keep 30-projects/ notes accurate to monorepo code changes (portable copy of the repo skill)
 - [[Prompt Harness Skill]] — turn Claude Web planning chats + vault plans into a per-project Execution Harness doc; generate/update/review/execute (portable copy of the ~/.claude skill)
+- [[Harness Automation Pipeline]] — chat-triggered: claude.ai issue → GitHub Action → cloud routine generates the harness via PR; execution gated
 
 ## Planned (not yet written)
 - Prompt Structure Patterns — XML tags, few-shot, role framing

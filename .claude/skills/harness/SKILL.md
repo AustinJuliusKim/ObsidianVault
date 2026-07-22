@@ -1,21 +1,4 @@
 ---
-title: Prompt Harness Skill
-aliases: [harness, execution-harness]
-tags: [claude-code, skills, workflow, orchestration]
-type: note
-status: evergreen
-created: 2026-07-21
-updated: 2026-07-21
-related: [[Wake-on-Reset Skill]], [[Vault-Sync Skill]], [[Model Routing Strategy]]
----
-# Prompt Harness Skill
-
-A Claude Code skill that turns finished planning — Claude Web chat exports/pastes plus vault plan docs — into a per-project **Execution Harness** (`30-projects/<Project> Execution Harness.md`): a dependency-ordered schedule of self-contained prompts with model routing (Opus/Sonnet/Haiku), gates, and standing rules. Four modes: generate a new harness, update/tick an existing one, review it against its source plans, and execute the next runnable prompt. The file also doubles as a paste-in prompt for Claude Web.
-
-**Install:** copy the fenced block below into `~/.claude/skills/harness/SKILL.md` on any machine (user-global; available in every project). Local source of truth: that same path on the MacBook. A repo-level copy also lives at `ObsidianVault/.claude/skills/harness/SKILL.md` for cloud sessions (see [[Harness Automation Pipeline]]) — keep both in sync when the skill changes.
-
-````markdown
----
 name: harness
 description: Turn planning chats (Claude Web exports/pastes) and ObsidianVault plan docs into a per-project Execution Harness — a dependency-ordered schedule of self-contained Claude Code prompts with model routing — then keep it current and drive it. Invoke when the user says "create/build an execution harness", "harness this plan/chat", "tick the harness", "review the harness", "run the next harness prompt", or pastes a Claude Web planning chat they want operationalized.
 ---
@@ -153,4 +136,3 @@ Read-only audit of the harness against its source plans. Check every item; repor
 ## Claude Web use
 
 This file doubles as a paste-in prompt for Claude Web (no tools): paste it plus the source plans/chat, and ask for the harness doc as output to save into the vault manually. Vault-protocol and Execute steps that need tools don't apply there — Generate's skeleton and rules do.
-````
