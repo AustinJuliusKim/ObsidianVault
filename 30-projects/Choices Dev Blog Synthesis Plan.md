@@ -30,7 +30,7 @@ Store packs at `00-inbox/blog-drafts/<slug>/sources.md`.
 ### 2. Draft (one LLM call per post)
 - **Model: Claude Sonnet 5 (`claude-sonnet-5`)** — the writing workhorse, matching the vault's org-chart routing (Sonnet = implementation/writing). Near-Opus prose quality at $3/$15 per MTok ($2/$10 intro through 2026-08-31). A post (≈40K tokens of source pack in, ≈4K out) costs **≈ $0.15–0.30/draft** — generate 2 variants and it's still under a dollar.
 - **Escalation**: Fable/Opus only for the outline/critique pass on flagship posts (launch post, PAYG war story) where judgment > fluency. Haiku 4.5 for mechanical passes (link checking, front-matter, excerpt/thread generation for X).
-- Prompt template (versioned in the vault or repo skill): voice pack (candid, numbers-transparent, first person, no AI-slop hedging; the constitution's "tease the situation" rule does NOT apply here — builder voice, not product voice) + post brief (angle, series, target length ~1,200–1,800 words, required number, CTA) + source pack. Ask for: title options ×3, the post, a 5-tweet X thread excerpt.
+- Prompt template (versioned in the vault or repo skill): **load [[Austin Voice Pack]] and imitate its verbatim §Samples — samples beat trait adjectives; run its §Checks before output** (codified 2026-07-22: the constitution's "tease the situation" rule does NOT apply here — builder voice, not product voice; this override lives here, not in per-harness prompts) + post brief (angle, series, target length ~1,200–1,800 words, required number, CTA) + source pack. Ask for: title options ×3, the post, a 5-tweet X thread excerpt.
 - Output to `00-inbox/blog-drafts/<slug>/draft-v1.md`.
 - Execution vehicle: a repo skill (`/blog-draft <slug>`) that gathers sources and makes the API call — or simply a Claude Code session on Sonnet with the same prompt. Skill preferred once cadence is real; session is fine for the first posts.
 
@@ -56,6 +56,8 @@ Same loop as the proposal: subscribers + builder DMs; per-post UTM to the game. 
 
 ## Next actions
 - [x] First draft run — done 2026-07-08 ("Game-first onboarding", see Shakedown log); refine the voice pack from Austin's edits. CloudFront story remains next in the queue.
+- [ ] **Seed [[Austin Voice Pack]] §Samples** (Austin, ~15 min): 3–5 verbatim pieces of his own writing — the pack's instructions say what to grab. Until then drafts run on provisional traits and WILL read dry (draft-v1 of `app-for-my-marriage` is the evidence).
+- [ ] After each stage-3 edit, append the edit-diff patterns to [[Austin Voice Pack]] §Edit-diff log, then re-draft the NEXT post with it; optionally re-run `app-for-my-marriage` as draft-v2 once samples exist.
 - [ ] Resolve the blog hosting task (proposal: Haiku compares Substack-custom-domain vs static+email; Sonnet builds the winner).
 - [ ] Turn the pipeline into a repo skill once ≥2 posts have gone through it manually.
 
