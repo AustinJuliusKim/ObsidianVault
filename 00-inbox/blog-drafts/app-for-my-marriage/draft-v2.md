@@ -21,7 +21,7 @@ It took me an embarrassingly long time to notice what our dumb little race actua
 
 Here's how it works. One of you lists the options. Then you take turns *cutting* them, one at a time, until a single option is left standing. That's dinner. And the thing is — nobody picked it. You each shaped it, nobody selected it, so there's no one to blame and no way to check out of the decision. Elimination instead of selection, which sounds like a shower thought until you realize it dissolves the two ways couples actually lose this fight (deciding = you own a bad dinner, deferring = you own the stalemate).
 
-When I finally wrote it down as code, the balance turned out to be load-bearing in a way I never consciously chose: the person who curates the list never makes the final cut. Curation power on one side, elimination power on the other, like a tiny constitutional government for pad thai. The reveal screen says the quiet part out loud: **"Nobody picked this. Everybody picked this."**
+When I finally wrote it down as code, the balance turned out to be load-bearing in a way I never consciously chose: in our four-option game, the person who curates the list never makes the final cut. Curation power on one side, elimination power on the other, like a tiny constitutional government for pad thai. The reveal screen says the quiet part out loud: **"Nobody picked this. Everybody picked this."**
 
 ## Building it (between bottle feeds)
 
@@ -61,6 +61,6 @@ So run the test on your own thing: after your user's next bad outcome, who do th
 
 1. It's 6:47pm. "What do you want to eat?" / "whatever you want" / "I picked last time." My wife and I have raced to say the word "choices" for years to break this loop — loser lists 4 options, winner can't complain. Last month I built it into an app. 🧵
 2. The mechanic our kitchen accidentally invented: nobody PICKS dinner. You take turns cutting options until one survives. No blame (nobody chose it), no apathy (everybody acted). Elimination, not selection.
-3. The balance is load-bearing and I didn't even design it: whoever curates the list never makes the final cut. Curation power vs elimination power, like a tiny constitutional government for pad thai.
+3. The balance is load-bearing and I didn't even design it: in the four-option game, whoever curates the list never makes the final cut. Curation power vs elimination power, like a tiny constitutional government for pad thai.
 4. Honest numbers from the one-person studio: 82 commits this month, 169 tests, $0/mo infra on a CloudFront flat plan, and 8 real games logged in 11 days. Eight! Distribution is the boss fight, not features.
 5. The stealable part: find the BLAME in your product and design it out. After a bad outcome, who does your user get to blame? If it's a person, you need a mechanic — not copy — that removes the defendant. Building in public here, come steal things!

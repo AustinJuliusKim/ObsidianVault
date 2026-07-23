@@ -25,7 +25,7 @@ Here's what I eventually noticed about our game, and it took me embarrassingly l
 
 One of us lists four options. Then we take turns *cutting* them — one at a time, alternating — until a single option is left standing. That's dinner. Nobody chose it. Both of us shaped it. There is no one to blame and no way to be apathetic, because everyone acted and no one decided.
 
-Elimination, not selection. That's the whole product. When I finally wrote it down as code, the balance turned out to be load-bearing in a way I hadn't consciously designed: the player who curates the list never makes the final cut. Curation power on one side, elimination power on the other. If you both play, the outcome belongs to both of you — which in a marriage is the entire point.
+Elimination, not selection. That's the whole product. When I finally wrote it down as code, the balance turned out to be load-bearing in a way I hadn't consciously designed: in the four-option game, the player who curates the list never makes the final cut. Curation power on one side, elimination power on the other. If you both play, the outcome belongs to both of you — which in a marriage is the entire point.
 
 The reveal screen says it out loud: *"Nobody picked this. Everybody picked this."*
 

@@ -26,7 +26,7 @@ Builder voice: candid, numbers-transparent, first person, no AI-slop hedging. Th
 - 169 backend tests, all green. Source: `node --test` on branch worktree-choices-hardening.
 - 8 real games logged in the first 11 days of the event lake (2026-07-08 → 07-19). Source: [[Choices Harness Audit 2026-07-21]] item 10.
 - $0/mo infrastructure: prod rides a CloudFront Free flat-rate plan (1M req/mo allowance). Source: [[Choices Growth Plan]] §10b.
-- 2-player elimination invariant: the player who curates the list never makes the final cut. Source: [[Choices Growth Plan]] §7; `backend/game.mjs`.
+- 2-player elimination invariants: in the classic 4-choice game the curator never makes the final cut; across variable counts (3–8, added 2026-07-22) the rule is the invitee always cuts first (PR #53 review ruling). Source: [[Choices Growth Plan]] §7; `backend/game.mjs`.
 
 ## GAPS — PENDING, DO NOT INVENT (from [[Choices Origin Story Source Pack]] §Gap interview)
 1. Ritual origin — one specific remembered instance (where, who lost, what was dinner).
