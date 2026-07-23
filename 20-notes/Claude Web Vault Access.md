@@ -21,6 +21,15 @@ The harness pipeline's **read path**: makes every new claude.ai chat start vault
 5. Settings → Capabilities → **Memory**: on, and use project-scoped memory so studio planning stays separate from personal chats. Paid plans can also "reference past chats" inside the Project.
 6. **Habit**: hit "Sync now" on the project's GitHub source before a planning session (sync is manual and goes stale; the instructions teach the chat to fall back to live fetches).
 
+## GitHub connector auth (required for the write path)
+
+The first-party GitHub connector must be authed with a **fine-grained PAT**, not the OAuth app install — the app's fixed permission set can read repos but **cannot create issues**, so harness kickoffs "try and error" (diagnosed 2026-07-23). Recipe:
+
+1. github.com → Settings → Developer settings → Fine-grained tokens → New: repository access *Only select* → `AustinJuliusKim/ObsidianVault` + `AustinJuliusKim/projects`; permissions **Issues: Read and write**, **Contents: Read-only** (Metadata auto). ~1-year expiry; calendar the renewal.
+2. claude.ai → Settings → Connectors → disconnect the OAuth-installed GitHub connector → reconnect pasting the PAT.
+
+**Do NOT add a custom MCP connector for `api.githubcopilot.com/mcp`** — GitHub's remote MCP server rejects the OAuth flow claude.ai custom connectors use (no Dynamic Client Registration, github/github-mcp-server#549) and claude.ai can't send the PAT header that works in Claude Code. A half-connected one only gives chats a broken tool to trip on; remove it if present.
+
 ## Project custom instructions (paste verbatim)
 
 ```
