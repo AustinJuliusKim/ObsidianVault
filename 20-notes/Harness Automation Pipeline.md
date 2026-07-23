@@ -38,6 +38,8 @@ Plan inside the claude.ai Project configured per [[Claude Web Vault Access]]: pr
 
 ## Kicking it off from a chat
 
+Requires the PAT-authed GitHub connector (OAuth-app install can't create issues) — setup in [[Claude Web Vault Access]] §GitHub connector auth.
+
 End a planning chat with:
 
 > Using the GitHub connector, create an issue on `AustinJuliusKim/ObsidianVault` titled `Harness: <Project>` with the `harness` label, following the repo's "Harness intake" issue template — Project name, source plan titles, the full plan from this chat, and any locked constraints.
