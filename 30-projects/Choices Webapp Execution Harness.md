@@ -5,7 +5,7 @@ tags: [choices, claude-code, workflow]
 type: project
 status: active
 created: 2026-07-21
-updated: 2026-07-22
+updated: 2026-07-23
 related: ["[[Choices Growth Plan]]", "[[Choices Suggestion Engine Plan]]", "[[Choices Data Architecture Plan]]", "[[Choices iOS GTM Plan]]", "[[Choices Marketing Proposal]]", "[[Choices Dev Blog Synthesis Plan]]", "[[Choices Webapp]]", "[[Studio Design Constitution]]"]
 ---
 # Choices Webapp Execution Harness
@@ -32,9 +32,11 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 | 8 | Dev blog Post #1 draft (pipeline shakedown) | Sonnet | 0.5d | none — swap-point, run any time |
 | 9 | iOS Phase A — **audit-DONE 2026-07-21** (Capacitor shell shipped via main, see STORE_READINESS.md; feature/ios-capacitor stale at 0 unique commits — delete after checking fix/lambda-cors-capacitor; on-device install check → row H) | Sonnet | 1–2d | Prompt 0 (branch state) |
 | 10 | Premium/partnership strategy pass | Opus | 1d | traction data (post-launch) |
+| 11 | Feature flags: store + API (§10c) | Sonnet | 1d | Prompt 0 |
+| 12 | Feature flags: `#/admin` + client hooks (§10c) | Sonnet | 1–2d | Prompt 11 |
 | H | Human tasks (no prompt) | User | — | see list |
 
-**Ordering rationale.** Cost-first per Growth Plan sequencing v1.3: the event lake (1) comes early because unlogged weeks are lost training data, and its envelope is the project's one remaining one-way door. Hardening close-out (2) and hygiene (3) are independent of each other — swap freely. Variable choice count (4) is the hard prerequisite for group mode (5→6), which is deliberately simulation-before-UI per Constitution rule 10. Phase 2 trie (7) is data-gated, not effort-gated. Blog (8) is fully decoupled — flagged swap-point, runnable whenever. iOS (9) is paced by the Apple human tasks in row H, not by other prompts. **Suggestion Phases 4/5 and Data Stages B/C are intentionally absent** — their triggers (Phase 2+3 data; ~10k games/mo) haven't fired; add rows when they do.
+**Ordering rationale.** Cost-first per Growth Plan sequencing v1.3: the event lake (1) comes early because unlogged weeks are lost training data, and its envelope is the project's one remaining one-way door. Hardening close-out (2) and hygiene (3) are independent of each other — swap freely. Variable choice count (4) is the hard prerequisite for group mode (5→6), which is deliberately simulation-before-UI per Constitution rule 10. Phase 2 trie (7) is data-gated, not effort-gated. Blog (8) is fully decoupled — flagged swap-point, runnable whenever. iOS (9) is paced by the Apple human tasks in row H, not by other prompts. **Suggestion Phases 4/5 and Data Stages B/C are intentionally absent** — their triggers (Phase 2+3 data; ~10k games/mo) haven't fired; add rows when they do. **Feature flags (11→12) added 2026-07-23** per §10c: store+API is a hard dependency for the admin panel (needs the API to call), but both are decoupled from every other row and can run any time after Prompt 0.
 
 ## Prompt 0 — Repo/plan audit `Sonnet`
 ```
@@ -122,6 +124,22 @@ Load context: [[Choices Growth Plan]] (§2, §2a, §8, §Open questions — stre
 Task: (1) Revisit the premium gate split against the streak-visibility research (never paywall seeing the streak) with real conversion data. (2) Sponsored-slots viability memo. (3) Partnership pitch outline (§5 delivery integration). Output: a decision memo appended to [[Choices Growth Plan]] as a dated section, options + recommendation — decisions stay Austin's.
 Constraints: No implementation. Constitution ethic rules 6–9 veto any option that tracks partners against each other.
 Acceptance: Dated memo section exists in the Growth Plan with explicit recommendations per question.
+```
+
+## Prompt 11 — Feature flags: store + API `Sonnet` `[plan-first]`
+```
+Load context: [[Choices Growth Plan]] (§10c), [[Choices Data Architecture Plan]] (event catalog bundle E — `flag_changed`, added 2026-07-23), docs/audit-<date>.md (Prompt 0), apps/choices-webapp backend.
+Task: (1) Add `FLAGS#global` DynamoDB item: `{flags: {name: {enabled, default, description, type: release|ops|exp, public, updatedAt, updatedBy}}, version}` on the existing table. (2) `flags.mjs`: 60s in-Lambda cache; `isEnabled(name)` falls back to the flag's declared default on any store error — never throws. (3) API endpoints on the existing router: `getFlags` (public subset only, `Cache-Control: 60s` → CloudFront), `adminListFlags`, `adminSetFlag` (optimistic version check → 409 on conflict). (4) Emit the additive `flag_changed` event on every successful `adminSetFlag`. (5) Seed `ops_kill_places`, `ops_kill_fill4`, `release_reveal_card`; migrate the §10a P2/P3 SSM-param realtime flags to `release_realtime_subscribe` / `release_polling_demoted`.
+Constraints: `game.mjs` untouched. No per-request DDB read beyond the 60s cache refresh. Non-public flags never appear in `getFlags` output. Unauthorized `adminSetFlag` → 403. Unit tests for cache expiry, default fallback, version conflict.
+Acceptance: unit tests pass for cache-expiry/default-fallback/409-conflict; a manual `adminSetFlag` call round-trips through `getFlags` after the cache window; a `flag_changed` row is queryable in Athena for a test flip.
+```
+
+## Prompt 12 — Feature flags: `#/admin` + client hooks `Sonnet`
+```
+Load context: [[Choices Growth Plan]] (§10c), Prompt 11's `flags.mjs`/API, apps/choices-webapp frontend, `AdminView.jsx` (existing owner-only `ADMIN_SUBS` gate — separate mechanism, not touched).
+Task: (1) If no Cognito User Pool exists yet, provision one (SAM) with an `admin` group. (2) `#/admin` route renders only when the JWT carries the `admin` group claim, verified server-side; non-admins get a plain 404 screen. (3) Code-split the admin bundle out of the player bundle. (4) Admin panel: list/toggle/edit flags via `adminListFlags`/`adminSetFlag`, surfacing 409 conflicts to the operator. (5) Client: `FlagsProvider` fetches `getFlags` at load (CloudFront-cached); `useFlag(name, default)` hook; components render with defaults and hydrate when flags arrive — no first-paint block.
+Constraints: unauthorized `adminSetFlag` → 403 (verify from the client too, not just Prompt 11's server check). Admin bundle must not ship to non-admin sessions — verify via built bundle inspection. Player first paint unaffected by the flags fetch.
+Acceptance: a non-admin hitting `#/admin` sees the 404 screen; an admin toggles a flag and sees it reflected via `useFlag` within one 60s cache cycle; a bundle-size check confirms admin code isn't in the main chunk; `useFlag` default/hydrate unit tests pass.
 ```
 
 ## Row H — Human tasks (no prompt)

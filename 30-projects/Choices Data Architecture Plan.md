@@ -5,7 +5,7 @@ tags: [choices, architecture, data, analytics, planning]
 type: project
 status: draft
 created: 2026-07-11
-updated: 2026-07-12
+updated: 2026-07-23
 related: [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]], [[Studio Design Constitution]]
 ---
 # Choices Data Architecture Plan
@@ -14,7 +14,7 @@ related: [[Choices Growth Plan]], [[Choices Suggestion Engine Plan]], [[Studio D
 
 **Stage A LIVE (2026-07-12)** — merged (PR #28) and deployed to preview + prod the same day; smoke-verified on both (game → raw+anon lake objects, Athena group-by + payload-map queries, DLQ 0); alarms stack `ChoicesEventLakeAlarms` deployed (SNS confirmation pending); CI deploy-role IAM updated (19 statements incl. preview-table drift fix). Built as: transactional-outbox `EVENT#` items in the game transactions + a validated `track` action for client-side catalog events (enums/bounded ints only — typed text structurally impossible), Streams consumer → `EventLakeBucket` raw/anon JSONL zones, anon refs via daily-**derived** salt (`HMAC(ANON_SALT, "day:"+day)` — stateless, no rotation job; fail-closed when unset), `pairing_deleted` tombstones from `PAIR#` REMOVEs (additive type #26), weekly compaction (raw-zone-only, crash-safe manifest), Glue partition-projected tables + Athena workgroup (no crawler), `docs/event-lake.md` as the envelope/one-way-door contract. Pipeline alarms (IteratorAge >5 min, DLQ depth, errors) in admin-deployed `ops/event-lake-alarms.yaml` (prod-only as written). 148/148 backend tests. Ops before live: CI IAM additions, `AnonSalt` check, preview smoke + Athena query, alarms deploy; old static-salt `entries/` feed intentionally NOT backfilled (incompatible refs).
 
-4. **Event catalog v1 (FROZEN 2026-07-11, all bundles approved)**: core `game_created, seat_claimed, cut_made, game_finished, rematch, push_sent, link_clicked, suggestion_accepted, fill4_used` **+ A Funnel/viral**: `invite_link_opened, join_abandoned, reveal_viewed, reveal_card_shared, pwa_installed, push_permission_result` **+ B Suggestion/AI**: `suggestion_shown` (layer+count, never typed text), `fill4_shown, fill4_swapped` **+ C Monetization**: `order_click` (platform, place_id?), `paywall_viewed, sub_started, sub_cancelled, tip_given` **+ D Ops**: `client_error` (type only), `realtime_fallback`.
+4. **Event catalog v1 (FROZEN 2026-07-11, all bundles approved)**: core `game_created, seat_claimed, cut_made, game_finished, rematch, push_sent, link_clicked, suggestion_accepted, fill4_used` **+ A Funnel/viral**: `invite_link_opened, join_abandoned, reveal_viewed, reveal_card_shared, pwa_installed, push_permission_result` **+ B Suggestion/AI**: `suggestion_shown` (layer+count, never typed text), `fill4_shown, fill4_swapped` **+ C Monetization**: `order_click` (platform, place_id?), `paywall_viewed, sub_started, sub_cancelled, tip_given` **+ D Ops**: `client_error` (type only), `realtime_fallback` **+ E Flags (added 2026-07-23, additive — [[Choices Growth Plan]] §10c)**: `flag_changed` (flag name, enabled+default old/new, updatedBy — admin actor only, never PII).
    **Never logged**: keystrokes/typed text; sub-k-floor content in anon zone; any partner-vs-partner surface (constitution rule 6 applies to analytics). Additive-only evolution; new fields never repurpose old ones.
 
 ## Verdict on current architecture
