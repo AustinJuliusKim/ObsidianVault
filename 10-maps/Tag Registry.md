@@ -5,7 +5,7 @@ tags: [meta, index]
 type: index
 status: developing
 created: 2026-07-15
-updated: 2026-07-15
+updated: 2026-07-23
 related: [[Home MOC]]
 ---
 # Tag Registry
@@ -20,7 +20,7 @@ related: [[Home MOC]]
 `project`
 
 **Domain / topic**
-`llm` `architecture` `data` `analytics` `search` `infrastructure` `workflow` `principles` `collaboration` `orchestration` `capture` `cost` `marketing` `content` `story` `gtm` `growth` `monetization` `business` `strategy` `roadmap` `vision` `design` `curriculum` `finance` `personal` `home`
+`llm` `architecture` `data` `analytics` `search` `infrastructure` `workflow` `principles` `collaboration` `orchestration` `capture` `cost` `marketing` `content` `story` `gtm` `growth` `monetization` `business` `strategy` `roadmap` `vision` `design` `curriculum` `finance` `personal` `home` `client`
 
 **Project**
 `choices` `claude-repl` `studio` `obsidian` `game`

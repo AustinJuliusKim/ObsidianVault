@@ -4,7 +4,7 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-07-01
-updated: 2026-07-15
+updated: 2026-07-23
 ---
 # Projects MOC
 > Purpose: entry point for personal projects in the `personal/projects` monorepo.
@@ -19,6 +19,9 @@ updated: 2026-07-15
 
 ## Career
 - [[AI Engineering Job Search]] — positioning + application strategy for AI engineering roles (anchored on 3 Anthropic postings); deliverables in `apps/portfolio/` (portfolio site, résumé, LinkedIn copy)
+
+## Business engagements
+- [[Web App Client No. 1]] — first paid client engagement (Je T'adore Pet Salon & Bakery / California Dulce Doodles), business-dev/pre-contract phase; see [[Web App Client No. 1 Execution Harness]]
 
 ## Vault meta
 - Up: [[Home MOC]]
