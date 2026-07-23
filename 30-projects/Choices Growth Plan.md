@@ -5,14 +5,15 @@ tags: [project, webapp, planning, growth, monetization]
 type: project
 status: draft
 created: 2026-07-01
-updated: 2026-07-15
+updated: 2026-07-23
 related: [[Choices Webapp]], [[Relational Games Studio Roadmap]], [[Studio Design Constitution]], [[Choices Marketing Proposal]], [[Choices Suggestion Engine Plan]], [[Choices CloudFront PAYG Migration Plan]], [[Projects MOC]]
 ---
 # Choices Growth Plan
 
 Strategic roadmap for scaling [[Choices Webapp]] from a personal two-player game into a shareable product with revenue potential. Core insight driving everything: the game solves decision apathy for "what should we eat" — the natural end of every game is a food order, which makes delivery integration the monetization engine rather than a bolt-on.
 
-**Version:** v1.5 (2026-07-04) — tip jar shipped (Venmo + Stripe PWYW link, post-value placements) with premium-interest tracking; pricing research note added to §2a (market band is $4–8/mo, $2.50 flagged for revisit)
+**Version:** v1.6 (2026-07-23) — feature flag system locked (§10c): DynamoDB-backed flags supersede the §10 Tier-2 / §10a SSM-param kill-switch design
+*v1.5 (2026-07-04) — tip jar shipped (Venmo + Stripe PWYW link, post-value placements) with premium-interest tracking; pricing research note added to §2a (market band is $4–8/mo, $2.50 flagged for revisit)*
 *v1.4 (2026-07-04) — iOS §3 restructured into a two-phase ladder: Phase A free-tier Capacitor build now, Phase B paid launch (enrollment deferred to the launch gate)*
 *v1.3 (2026-07-04) — cost-first re-sequencing:* Tier-1 hardening promoted to step 1 and now in implementation (feature/tier1-hardening, verified on the preview stack); Tier-1 design decisions locked (§10b); iOS readiness checklist added (§3); Capacitor pulled up in sequencing behind cost work
 *v1.2 (2026-07-01) — premium = subscription only (lifetime unlock rejected); meal-kit CPA added to winner-screen spec with cook-at-home detection (§2a, §6)*
@@ -337,7 +338,7 @@ Framing: serverless doesn't topple, it **bills**. Failure modes at viral scale a
 - Replace polling with **API Gateway WebSockets or AppSync Events** (evaluate: AppSync Events is less plumbing; IoT Core is the budget fan-out trick). Keep polling as fallback path.
 - Quota raises filed with AWS: Lambda account concurrency, DDB on-demand throughput, WebSocket connection rates. (Support tickets take days — file before launch spikes, not during.)
 - Push fan-out behind **SQS + worker Lambda** (batching, 429 handling from push services); with Capacitor apps, FCM/APNs via SNS handles native fan-out.
-- **Kill switches / feature flags** (SSM Parameter Store): shed Places calls, reveal-card generation, non-essential features under load; core game survives.
+- **Kill switches / feature flags** (SSM Parameter Store): shed Places calls, reveal-card generation, non-essential features under load; core game survives. *(Superseded 2026-07-23 — see §10c: DynamoDB-backed flag system replaces SSM here.)*
 - Load test the full game loop with k6/Artillery against a staging stack; find the real quota walls before users do.
 - Longer game codes when `CODE#` collision retries climb (monitor now, act later).
 
@@ -383,7 +384,7 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 - New `backend/realtime.mjs`: `publishState(pairingId, state)` — called at the end of each mutation path. Game logic (`game.mjs`) untouched (stays pure).
 - SAM: AppSync Events API resource, Lambda authorizer fn, env var for the events endpoint.
 
-**Migration phases (each shippable, feature-flagged via SSM param)**
+**Migration phases (each shippable, feature-flagged via SSM param — superseded 2026-07-23, see §10c)**
 1. **P0 — Adaptive polling** (Tier 1, ships anyway; becomes the fallback layer)
 2. **P1 — Publish side:** AppSync resource + authorizer + `publishState` calls; nothing consumes yet (dark launch, verify in console)
 3. **P2 — Subscribe side:** client connection manager behind flag; polling continues in parallel; compare state convergence in logs
@@ -412,6 +413,28 @@ Rationale: API GW WebSockets requires self-managed connection lifecycle (connect
 - Fable/Opus: this architecture review (done; revisit at Tier-2 trigger)
 - Sonnet: WAF/CloudFront config, adaptive polling, EMF metrics, canary script, SQS push worker
 - Haiku: quota limit research, AppSync Events vs. API GW WebSocket pricing comparison
+
+### 10c. Feature flag system (locked 2026-07-23)
+
+**Decision: DynamoDB-backed flags, not SSM.** Supersedes the SSM Parameter Store kill-switch design sketched in §10 Tier 2 and referenced in §10a's migration phases — SSM has no admin UI, no audit trail, and a second config surface duplicates the DDB+Streams pipeline already built in Stage A. Flags now ride the same store and get the `flag_changed` event for free.
+
+**Store:** single DynamoDB item `FLAGS#global` — `{flags: {name: {enabled, default, description, type: release|ops|exp, public, updatedAt, updatedBy}}, version}`. Reuses the existing table; Stage A Streams gives an audit trail via the new additive `flag_changed` event ([[Choices Data Architecture Plan]] event catalog).
+
+**Server eval:** `flags.mjs` — 60s in-Lambda cache; `isEnabled(name)` falls back to the flag's declared default on any store error (never throws).
+
+**API (existing router):** `getFlags` (public subset, `Cache-Control: 60s` → CloudFront), `adminListFlags`, `adminSetFlag` (optimistic version check → 409 on conflict).
+
+**Admin auth:** Cognito JWT with an `admin` group claim, verified server-side. `#/admin` renders only with the claim; non-admins get a plain 404. Admin bundle code-split out of the player bundle. *(Distinct from the existing owner-only `ADMIN_SUBS` gate in `AdminView.jsx` — that mechanism is untouched.)*
+
+**Client:** `FlagsProvider` fetches `getFlags` at load (CloudFront-cached); `useFlag(name, default)` hook; components render with defaults and hydrate when flags arrive — no first-paint block.
+
+**Seeds:** `ops_kill_places`, `ops_kill_fill4`, `release_reveal_card`; the §10a P2/P3 SSM-param realtime flags migrate onto this system as `release_realtime_subscribe` / `release_polling_demoted`.
+
+**Lifecycle:** `release_` / `ops_` / `exp_` prefixes; `release_` flags deleted after full rollout.
+
+**Locked constraints:** propagation lag of 60s–2min accepted (lean; no push invalidation). `game.mjs` untouched. No per-request DDB read beyond the 60s cache refresh. Non-public flags never appear in `getFlags` output. Unauthorized `adminSetFlag` → 403.
+
+**Model routing:** Sonnet — store, API, admin UI, client hooks.
 
 ## Suggested sequencing (re-ordered v1.3: cost-first, iOS pulled up)
 
