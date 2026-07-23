@@ -5,7 +5,7 @@ tags: [claude-code, skills, workflow, orchestration]
 type: note
 status: evergreen
 created: 2026-07-21
-updated: 2026-07-22
+updated: 2026-07-23
 related: [[Prompt Harness Skill]], [[Model Routing Strategy]]
 ---
 # Harness Automation Pipeline
@@ -31,6 +31,10 @@ claude.ai chat (GitHub connector enabled)
 ```
 
 Routine page: https://claude.ai/code/routines/trig_012Z62wCfRW5Sdm1wxpgCB6s
+
+## Starting a chat vault-aware (the read path)
+
+Plan inside the claude.ai Project configured per [[Claude Web Vault Access]]: project knowledge carries the synced `10-maps/` index, the GitHub connector fetches deeper notes on demand, and the project instructions end every planning chat by filing the harness issue below. Without it, new chats start amnesiac.
 
 ## Kicking it off from a chat
 
