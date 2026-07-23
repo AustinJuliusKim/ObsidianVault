@@ -5,7 +5,7 @@ tags: [choices, marketing, content, llm, pipeline, planning]
 type: project
 status: draft
 created: 2026-07-08
-updated: 2026-07-08
+updated: 2026-07-22
 related: ["[[Choices Marketing Proposal]]", "[[Choices Growth Plan]]", "[[Choices Suggestion Engine Plan]]", "[[Relational Games Studio Roadmap]]"]
 ---
 # Choices Dev Blog Synthesis Plan
@@ -30,7 +30,7 @@ Store packs at `00-inbox/blog-drafts/<slug>/sources.md`.
 ### 2. Draft (one LLM call per post)
 - **Model: Claude Sonnet 5 (`claude-sonnet-5`)** — the writing workhorse, matching the vault's org-chart routing (Sonnet = implementation/writing). Near-Opus prose quality at $3/$15 per MTok ($2/$10 intro through 2026-08-31). A post (≈40K tokens of source pack in, ≈4K out) costs **≈ $0.15–0.30/draft** — generate 2 variants and it's still under a dollar.
 - **Escalation**: Fable/Opus only for the outline/critique pass on flagship posts (launch post, PAYG war story) where judgment > fluency. Haiku 4.5 for mechanical passes (link checking, front-matter, excerpt/thread generation for X).
-- Prompt template (versioned in the vault or repo skill): voice pack (candid, numbers-transparent, first person, no AI-slop hedging; the constitution's "tease the situation" rule does NOT apply here — builder voice, not product voice) + post brief (angle, series, target length ~1,200–1,800 words, required number, CTA) + source pack. Ask for: title options ×3, the post, a 5-tweet X thread excerpt.
+- Prompt template (versioned in the vault or repo skill): **load [[Austin Voice Pack]] and imitate its verbatim §Samples — samples beat trait adjectives; run its §Checks before output** (codified 2026-07-22: the constitution's "tease the situation" rule does NOT apply here — builder voice, not product voice; this override lives here, not in per-harness prompts) + post brief (angle, series, target length ~1,200–1,800 words, required number, CTA) + source pack. Ask for: title options ×3, the post, a 5-tweet X thread excerpt.
 - Output to `00-inbox/blog-drafts/<slug>/draft-v1.md`.
 - Execution vehicle: a repo skill (`/blog-draft <slug>`) that gathers sources and makes the API call — or simply a Claude Code session on Sonnet with the same prompt. Skill preferred once cadence is real; session is fine for the first posts.
 
@@ -52,9 +52,13 @@ Same loop as the proposal: subscribers + builder DMs; per-post UTM to the game. 
 
 ## Shakedown log
 - **Run 1 (2026-07-08): "Game-first onboarding"** (Duolingo/Wordle pattern, Choices receipts) — drafted **in-session** (no `ant`/API key on the machine; per the first-posts allowance). Source pack + draft-v1 + thread at `00-inbox/blog-drafts/game-first-onboarding/`. Pipeline notes: PR bodies weren't needed for this one (product post — code-verified flow walk replaced them); the "one honest number" rule produced the strongest lines (2 taps, 0 signups, the `ghost` CSS class); Wordle web-verification added the closer (built for his partner). Template addition for next run: require a "delete test" style takeaway the reader can apply to their own product. This post joins the slate (7 banked).
+- **Run 2 (2026-07-22): Post #1 "I built an app for my marriage"** (slug `app-for-my-marriage`) — drafted **in-session** via harness row 8. Source pack + draft-v1 + thread at `00-inbox/blog-drafts/app-for-my-marriage/`. Pipeline notes: the Origin Story Source Pack's gap interview is still unfilled, so the draft carries six inline `[PENDING #n]` slots instead of invented detail (the pack's "do not invent" rule held; gap #5 — her enthusiasm — gates publishing on top of the App Store milestone). The canonical-beats table drafted cleanly; the "delete test" template rule produced the post's takeaway (design the *blame* out). Voice-pack note for next run: harness prompt said constitution voice, this plan overrides to builder voice for blog — codify the override in the prompt template so future runs don't have to resolve it. 8 banked.
+- **Run 3 (2026-07-22): Post #1 draft-v2** — Austin flagged v1 as dry and supplied 3 LinkedIn posts; verbatim samples + measured traits now live in [[Austin Voice Pack]] (provisional traits were measurably wrong — his register is long chained sentences, absurd similes, meme deadpans, life-as-parentheticals, not tidy short declaratives). `draft-v2.md` re-drafted against the samples; v1 kept beside it so Austin's edit-diff can compare all three (v1, v2, his edit). Pipeline lesson: the voice pack should have existed before Run 1 — samples first, always.
 
 ## Next actions
 - [x] First draft run — done 2026-07-08 ("Game-first onboarding", see Shakedown log); refine the voice pack from Austin's edits. CloudFront story remains next in the queue.
+- [x] **Seed [[Austin Voice Pack]] §Samples** — done 2026-07-22 (3 LinkedIn posts, captured verbatim; Austin: eyeball fidelity once). More samples still welcome, esp. a raw voice-memo transcript.
+- [ ] After each stage-3 edit, append the edit-diff patterns to [[Austin Voice Pack]] §Edit-diff log, then re-draft the NEXT post with it; optionally re-run `app-for-my-marriage` as draft-v2 once samples exist.
 - [ ] Resolve the blog hosting task (proposal: Haiku compares Substack-custom-domain vs static+email; Sonnet builds the winner).
 - [ ] Turn the pipeline into a repo skill once ≥2 posts have gone through it manually.
 

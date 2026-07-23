@@ -29,7 +29,7 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 | 5 | Group mode V3 — design + simulation, ship/kill report | Opus | 2–3d | Prompt 4 |
 | 6 | Group mode UI (only if Prompt 5 says ship) | Sonnet | 2–3d | Prompt 5 ship verdict + H playtest |
 | 7 | Suggestion engine Phase 2 — global trie | Sonnet | 2–3d | ~1k games logged — **~8 as of 2026-07-21**, gate far off |
-| 8 | Dev blog Post #1 draft (pipeline shakedown) | Sonnet | 0.5d | none — swap-point, run any time |
+| ✅ 8 | Dev blog Post #1 draft — done 2026-07-22 (pipeline Run 2): `00-inbox/blog-drafts/app-for-my-marriage/` sources + draft-v1 + thread; gap interview unfilled → draft carries [PENDING #n] slots, no invention (→ H-7); publish stays gated (App Store + her enthusiasm) | Sonnet | 0.5d | none — swap-point, run any time |
 | 9 | iOS Phase A — **audit-DONE 2026-07-21** (Capacitor shell shipped via main, see STORE_READINESS.md; feature/ios-capacitor stale at 0 unique commits — delete after checking fix/lambda-cors-capacitor; on-device install check → row H) | Sonnet | 1–2d | Prompt 0 (branch state) |
 | 10 | Premium/partnership strategy pass | Opus | 1d | traction data (post-launch) |
 | 11 | Feature flags: store + API (§10c) | Sonnet | 1d | Prompt 0 |
@@ -156,6 +156,7 @@ Acceptance: a non-admin hitting `#/admin` sees the 404 screen; an admin toggles 
 - **Decide: appetite for sponsored-slots sales tooling** (Growth Plan §Open questions).
 - **H-5 (from row-1 verification 2026-07-22): lake spot check** — ChoicesUser lacks s3/athena/cloudwatch read on the event lake and the admin profile session was expired; with admin creds, `aws s3 ls` both zones + one Athena `GROUP BY type` in `ChoicesWebApp-events` to confirm post-07-12 data keeps flowing. Fold into the H-2 admin recheck session.
 - **H-6 (from row 2, 2026-07-22): hardening ops deploys** — run PR projects#54's Ops tasks in order: H-2 duplicate check → CanarySecret on the app stack → `ChoicesCanary` stack (+SNS confirm, canary green) → `ChoicesOpsDashboard` redeploy (funnel widgets render) → `ChoicesRum` stack + `VITE_RUM_*` repo variables + frontend redeploy (forced error appears in RUM). Acceptance for row 2 completes here.
+- **H-7 (from row 8, 2026-07-22): origin-story gap interview** — fill the 6 items in [[Choices Origin Story Source Pack]] §Gap interview (esp. #5, her comfort — gates any publish), then edit `00-inbox/blog-drafts/app-for-my-marriage/draft-v1.md`'s [PENDING] slots. Publishing still waits for the App Store milestone.
 
 ## Standing rules for every session
 1. [[Studio Design Constitution]] governs: rubric, ethic (no scorekeeping between partners, privacy as posture), kill tests. If a prompt's task fails a kill test, stop and report — don't build it.
