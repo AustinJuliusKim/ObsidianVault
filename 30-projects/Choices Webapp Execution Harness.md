@@ -32,7 +32,7 @@ Dependency-ordered schedule of self-contained Claude Code prompts for the remain
 | 8 | Dev blog Post #1 draft (pipeline shakedown) | Sonnet | 0.5d | none — swap-point, run any time |
 | 9 | iOS Phase A — **audit-DONE 2026-07-21** (Capacitor shell shipped via main, see STORE_READINESS.md; feature/ios-capacitor stale at 0 unique commits — delete after checking fix/lambda-cors-capacitor; on-device install check → row H) | Sonnet | 1–2d | Prompt 0 (branch state) |
 | 10 | Premium/partnership strategy pass | Opus | 1d | traction data (post-launch) |
-| 11 | Feature flags: store + API (§10c) | Sonnet | 1d | Prompt 0 |
+| ✅ 11 | Feature flags: store + API — **done 2026-07-23, PR projects#55 (draft)**: flags.mjs (FLAG_DEFS + FLAGS#global overrides, 60s cache, never-throw defaults), getFlags/adminListFlags/adminSetFlag (Cognito admin-group gate, 409 optimistic), bundle-E flag_changed wired to Glue projections; 173/173 tests. Acceptance remainder (adminSetFlag round-trip + Athena row) rides PR #55 Ops tasks (Cognito admin group) | Sonnet | 1d | Prompt 0 |
 | 12 | Feature flags: `#/admin` + client hooks (§10c) | Sonnet | 1–2d | Prompt 11 |
 | H | Human tasks (no prompt) | User | — | see list |
 
