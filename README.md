@@ -4,7 +4,7 @@ Personal Obsidian knowledge vault — MOC-indexed atomic notes, project plans, a
 
 ## Harness pipeline — data flow
 
-A claude.ai planning chat turns into vault docs, an Execution Harness, and gated implementation work with no local steps. Details: `20-notes/Harness Automation Pipeline.md`.
+A claude.ai planning chat turns into vault docs, an Execution Harness, and gated implementation work with no local steps. Details: `20-notes/Harness Automation Pipeline.md`; chat-side context setup: `20-notes/Claude Web Vault Access.md`.
 
 <!-- KEEP IN SYNC: update this diagram whenever a pipeline component changes
      (workflow, issue template, harness skill, routine prompt/schedule, or the
@@ -13,7 +13,8 @@ A claude.ai planning chat turns into vault docs, an Execution Harness, and gated
 ```mermaid
 flowchart TD
     subgraph Planning
-        chat[claude.ai planning chat]
+        knowledge["Project knowledge:<br>synced 10-maps/ index"] --> chat[claude.ai planning chat]
+        connector["GitHub connector:<br>on-demand note fetches"] --> chat
     end
 
     chat -->|"GitHub connector files issue<br>title 'Harness: Project', label 'harness'"| issue["Issue on this repo<br>(.github/ISSUE_TEMPLATE/harness.md)"]

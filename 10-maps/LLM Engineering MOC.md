@@ -4,7 +4,7 @@ tags: [moc]
 type: moc
 status: developing
 created: 2026-06-25
-updated: 2026-07-21
+updated: 2026-07-23
 ---
 # LLM Engineering MOC
 > Purpose: entry point for everything about building with LLMs.
@@ -22,6 +22,7 @@ updated: 2026-07-21
 - [[Vault-Sync Skill]] — keep 30-projects/ notes accurate to monorepo code changes (portable copy of the repo skill)
 - [[Prompt Harness Skill]] — turn Claude Web planning chats + vault plans into a per-project Execution Harness doc; generate/update/review/execute (portable copy of the ~/.claude skill)
 - [[Harness Automation Pipeline]] — chat-triggered: claude.ai issue → GitHub Action → cloud routine generates the harness via PR; execution gated
+- [[Claude Web Vault Access]] — the pipeline's read path: claude.ai Project with synced 10-maps/ knowledge + GitHub-connector fetches, so new chats start vault-aware
 
 ## Planned (not yet written)
 - Prompt Structure Patterns — XML tags, few-shot, role framing
